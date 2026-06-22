@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataPilot | users Table Structure</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono&amp;family=Geist:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0e0e10",
+                    "on-secondary": "#003640",
+                    "inverse-primary": "#494bd6",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary": "#1000a9",
+                    "surface-tint": "#c0c1ff",
+                    "on-primary-container": "#0d0096",
+                    "secondary": "#4cd7f6",
+                    "surface-container-highest": "#353437",
+                    "primary-fixed": "#e1e0ff",
+                    "outline-variant": "#464554",
+                    "on-primary-fixed": "#07006c",
+                    "inverse-surface": "#e5e1e4",
+                    "surface-variant": "#353437",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-dim": "#131315",
+                    "surface-bright": "#39393b",
+                    "surface-container-low": "#1c1b1d",
+                    "secondary-fixed": "#acedff",
+                    "primary": "#c0c1ff",
+                    "on-surface-variant": "#c7c4d7",
+                    "on-error": "#690005",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "tertiary-container": "#00885d",
+                    "inverse-on-surface": "#313032",
+                    "tertiary": "#4edea3",
+                    "surface-container-high": "#2a2a2c",
+                    "surface": "#131315",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-tertiary-container": "#000703",
+                    "on-surface": "#e5e1e4",
+                    "outline": "#908fa0",
+                    "on-background": "#e5e1e4",
+                    "surface-container": "#201f22",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-tertiary": "#003824",
+                    "on-secondary-container": "#00424e",
+                    "background": "#131315",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "primary-container": "#8083ff",
+                    "on-secondary-fixed": "#001f26",
+                    "secondary-container": "#03b5d3",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-width": "280px",
+                    "margin": "24px",
+                    "gutter": "16px",
+                    "container-max": "1440px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "code-sm": ["jetbrainsMono"],
+                    "headline-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Geist"],
+                    "display-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "code-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131315;
+            color: #e5e1e4;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(28, 27, 29, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(144, 143, 160, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #464554;
+            border-radius: 10px;
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-b border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-6">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim tracking-tight">DataPilot</div>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Explorer</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Queries</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Schemas</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">History</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex bg-surface-container rounded-lg px-3 py-1.5 items-center gap-2 border border-outline-variant/30 w-64">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<span class="text-on-surface-variant text-label-md">Search metadata...</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-lg font-label-md hover:opacity-90 transition-all">Connect</button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional user profile avatar for a data engineer, depicted in a minimalist 3D isometric style with soft gradient lighting in shades of indigo and slate. The character wears sleek tech accessories, symbolizing expertise and modern database management within a dark mode UI context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtVAxeaxonVPql7TleHVUSGNnYqxCIi057TdHg_8Mql9M0-r0vCzWVfmAcMP9lFDXvJYT3N_1DhsT0wEK-flutjBhFsbA8jF6839Jw9wuCFSeu2R6seEDBwFUTtUp6k9ddGFabvQi6NaK-c9TmQY3qnLQE0wFcvHw4nGJV2jlF_VDw08UnW-UHgENa4EhuySkTPW-4UqUYAomt3N2J5opMeV4PmNFzyF5R9TvkLjgO5Y5Vc7GtERVgRgudDtS9-uEXGOjwZ8xvV_Sw"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-sidebar-width flex flex-col p-4 bg-surface-container-low/90 backdrop-blur-lg dark:bg-surface-container-low/90 border-r border-outline-variant/30 hidden md:flex">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Main Cluster</div>
+<div class="font-body-md text-[12px] text-on-surface-variant">Production-US-East</div>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<div class="px-2 py-1 flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg cursor-pointer transition-transform active:scale-95">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-md text-label-md">Databases</span>
+</div>
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-md text-label-md">AI Assistant</span>
+</div>
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">code</span>
+<span class="font-label-md text-label-md">Query Editor</span>
+</div>
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Monitoring</span>
+</div>
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">shield</span>
+<span class="font-label-md text-label-md">Security</span>
+</div>
+</div>
+<div class="mt-auto space-y-4">
+<div class="p-4 bg-surface-container-highest/30 rounded-xl border border-outline-variant/20">
+<div class="text-[12px] font-bold text-primary mb-1">PRO PLAN</div>
+<div class="text-[11px] text-on-surface-variant mb-3">Optimize queries with AI-powered indexing.</div>
+<button class="w-full bg-secondary-container text-on-secondary-container py-1.5 rounded-lg text-label-md font-bold">Upgrade Plan</button>
+</div>
+<div class="space-y-1">
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Docs</span>
+</div>
+<div class="px-2 py-1 flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">headset</span>
+<span class="font-label-md text-label-md">Support</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-0 md:ml-sidebar-width mt-16 p-gutter min-h-[calc(100vh-64px)] flex flex-col gap-6">
+<!-- Breadcrumb & Actions Row -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">storage</span>
+<span>Postgres</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>public</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface">users</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Structure</span>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">table_rows</span>
+                    View Data
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    New Query
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-label-md font-bold hover:opacity-90 transition-all ai-glow">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                    Ask AI
+                </button>
+</div>
+</div>
+<!-- Table Header Section -->
+<div class="flex flex-col gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface flex items-center gap-3">
+                    users
+                    <span class="material-symbols-outlined text-primary cursor-pointer">edit</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Customer accounts and authentication records</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold border border-outline-variant/30 uppercase tracking-wider">public schema</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold border border-outline-variant/30 uppercase tracking-wider">2.4k records</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold border border-outline-variant/30 uppercase tracking-wider">12 columns</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold border border-outline-variant/30 uppercase tracking-wider">3 relationships</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container/20 text-error text-[11px] font-bold border border-error/30 uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                    PII detected
+                </span>
+</div>
+</div>
+<!-- Content Layout with Right Panel -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+<!-- Left: Table & Structure -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant/30">
+<button class="px-6 py-3 text-label-md font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all">Data</button>
+<button class="px-6 py-3 text-label-md font-bold text-primary border-b-2 border-primary transition-all">Structure</button>
+<button class="px-6 py-3 text-label-md font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all">Relationships</button>
+<button class="px-6 py-3 text-label-md font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all">Indexes</button>
+<button class="px-6 py-3 text-label-md font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-all">Activity</button>
+</div>
+<!-- Main Structure Table -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-md text-[13px] border-b border-outline-variant/30">
+<tr>
+<th class="px-4 py-3 font-semibold">Column</th>
+<th class="px-4 py-3 font-semibold">Type</th>
+<th class="px-4 py-3 font-semibold">Nullable</th>
+<th class="px-4 py-3 font-semibold">Default</th>
+<th class="px-4 py-3 font-semibold">Key</th>
+<th class="px-4 py-3 font-semibold">Sensitivity</th>
+<th class="px-4 py-3 font-semibold">Description</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-[14px] divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-4 py-4 font-code-sm text-primary font-medium">id</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[12px] border border-outline-variant/20">uuid</span></td>
+<td class="px-4 py-4 text-on-surface-variant italic">not null</td>
+<td class="px-4 py-4 font-code-sm text-on-surface-variant opacity-60">gen_random_uuid()</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary text-[11px] font-bold uppercase border border-tertiary/20">primary</span></td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase">safe</span></td>
+<td class="px-4 py-4 text-on-surface-variant">Unique user identifier</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-4 py-4 font-code-sm text-primary font-medium">email</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[12px] border border-outline-variant/20">text</span></td>
+<td class="px-4 py-4 text-on-surface-variant italic">not null</td>
+<td class="px-4 py-4 font-code-sm text-on-surface-variant opacity-60">none</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary text-[11px] font-bold uppercase border border-primary/20">unique</span></td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-error-container/20 text-error text-[11px] font-bold uppercase border border-error/20">PII</span></td>
+<td class="px-4 py-4 text-on-surface-variant">Customer email address</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-4 py-4 font-code-sm text-primary font-medium">name</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[12px] border border-outline-variant/20">text</span></td>
+<td class="px-4 py-4 text-on-surface-variant">nullable</td>
+<td class="px-4 py-4 font-code-sm text-on-surface-variant opacity-60">none</td>
+<td class="px-4 py-4 text-on-surface-variant opacity-30">—</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-error-container/20 text-error text-[11px] font-bold uppercase border border-error/20">PII</span></td>
+<td class="px-4 py-4 text-on-surface-variant">Customer display name</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-4 py-4 font-code-sm text-primary font-medium">created_at</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[12px] border border-outline-variant/20">timestamp</span></td>
+<td class="px-4 py-4 text-on-surface-variant italic">not null</td>
+<td class="px-4 py-4 font-code-sm text-on-surface-variant opacity-60">now()</td>
+<td class="px-4 py-4 text-on-surface-variant opacity-30">—</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-[11px] font-bold uppercase">safe</span></td>
+<td class="px-4 py-4 text-on-surface-variant">Account creation date</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/20 transition-colors">
+<td class="px-4 py-4 font-code-sm text-primary font-medium">is_admin</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[12px] border border-outline-variant/20">boolean</span></td>
+<td class="px-4 py-4 text-on-surface-variant italic">not null</td>
+<td class="px-4 py-4 font-code-sm text-on-surface-variant opacity-60">false</td>
+<td class="px-4 py-4 text-on-surface-variant opacity-30">—</td>
+<td class="px-4 py-4"><span class="px-2 py-0.5 rounded bg-secondary-container/20 text-secondary text-[11px] font-bold uppercase border border-secondary/20">sensitive</span></td>
+<td class="px-4 py-4 text-on-surface-variant">Administrative access flag</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Secondary Sections -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Relationships -->
+<div class="glass-panel p-4 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Relationships</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] cursor-pointer hover:text-primary transition-colors">settings_ethernet</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-2 bg-surface-container rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-[18px] text-tertiary">link</span>
+<div class="text-[13px]">
+<span class="text-on-surface font-medium">users.id</span>
+<span class="mx-2 text-on-surface-variant opacity-50">→</span>
+<span class="text-secondary">orders.user_id</span>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2 bg-surface-container rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-[18px] text-tertiary">link</span>
+<div class="text-[13px]">
+<span class="text-on-surface font-medium">users.id</span>
+<span class="mx-2 text-on-surface-variant opacity-50">→</span>
+<span class="text-secondary">payments.user_id</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Indexes -->
+<div class="glass-panel p-4 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Indexes</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] cursor-pointer hover:text-primary transition-colors">speed</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 bg-surface-container rounded-lg border border-outline-variant/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-primary">key</span>
+<div class="text-[13px] font-code-sm text-on-surface">users_pkey <span class="text-on-surface-variant opacity-50 ml-1">(id)</span></div>
+</div>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant px-2 py-0.5 bg-surface-container-highest rounded">Primary</span>
+</div>
+<div class="flex items-center justify-between p-2 bg-surface-container rounded-lg border border-outline-variant/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-primary">key</span>
+<div class="text-[13px] font-code-sm text-on-surface">index_users_on_email <span class="text-on-surface-variant opacity-50 ml-1">(unique)</span></div>
+</div>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant px-2 py-0.5 bg-surface-container-highest rounded">B-Tree</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Safety Warning -->
+<div class="flex items-center gap-4 p-4 bg-error-container/10 border border-error/20 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div class="flex-1">
+<div class="font-label-md text-label-md font-bold text-error">Safety Warning</div>
+<div class="text-[13px] text-on-surface-variant">Sensitive fields detected. Be careful when exporting or editing this table to maintain GDPR and HIPAA compliance.</div>
+</div>
+</div>
+</div>
+<!-- Right: Table Assistant -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="glass-panel p-6 rounded-2xl flex flex-col gap-6 sticky top-24 border-primary/20 ai-glow">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Table Assistant</h3>
+<span class="text-[11px] text-primary uppercase font-bold tracking-widest">Active Intelligence</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container rounded-xl">
+<h4 class="text-[12px] font-bold text-on-surface-variant uppercase mb-2">Summary</h4>
+<p class="text-[14px] text-on-surface leading-relaxed">This table stores customer identity and access-related data. It is a core part of the authentication service.</p>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 border border-outline-variant/30 rounded-lg">
+<span class="text-[13px] text-on-surface-variant">Detected PII fields</span>
+<span class="px-2 py-0.5 bg-error-container/20 text-error rounded text-[11px] font-bold">2 Columns</span>
+</div>
+<div class="flex items-center justify-between p-3 border border-outline-variant/30 rounded-lg">
+<span class="text-[13px] text-on-surface-variant">Sensitive permissions</span>
+<span class="px-2 py-0.5 bg-secondary-container/20 text-secondary rounded text-[11px] font-bold">1 Access flag</span>
+</div>
+<div class="flex items-center justify-between p-3 border border-outline-variant/30 rounded-lg">
+<span class="text-[13px] text-on-surface-variant">Table relationships</span>
+<span class="px-2 py-0.5 bg-tertiary-container/20 text-tertiary rounded text-[11px] font-bold">3 Links</span>
+</div>
+</div>
+</div>
+<div class="space-y-2 pt-4">
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-outline-variant/50 text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+                            Open users data
+                        </button>
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-outline-variant/50 text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+                            Create safe view
+                        </button>
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-outline-variant/50 text-label-md font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+                            Generate CRUD query
+                        </button>
+</div>
+<div class="mt-4 relative">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-3 text-[13px] focus:ring-1 focus:ring-primary focus:border-primary resize-none placeholder-on-surface-variant/40" placeholder="Ask about users table..." rows="3"></textarea>
+<button class="absolute bottom-3 right-3 p-1.5 bg-primary text-on-primary rounded-lg shadow-lg">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Animated Glow Effect Background Element -->
+<div class="fixed top-0 right-0 -z-10 opacity-30 pointer-events-none">
+<div class="w-[500px] h-[500px] bg-primary blur-[160px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+</div>
+<div class="fixed bottom-0 left-0 -z-10 opacity-20 pointer-events-none">
+<div class="w-[400px] h-[400px] bg-secondary blur-[160px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
+</div>
+<script>
+        // Simple micro-interaction for rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+                row.style.transition = 'transform 0.2s ease-out';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

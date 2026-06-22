@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Database Overview - DataPilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#353437",
+                      "on-tertiary": "#003824",
+                      "surface-container-low": "#1c1b1d",
+                      "primary-fixed": "#e1e0ff",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "on-primary-fixed": "#07006c",
+                      "inverse-primary": "#494bd6",
+                      "outline-variant": "#464554",
+                      "tertiary-container": "#00885d",
+                      "primary": "#c0c1ff",
+                      "outline": "#908fa0",
+                      "on-primary": "#1000a9",
+                      "primary-container": "#8083ff",
+                      "surface-dim": "#131315",
+                      "on-secondary-fixed": "#001f26",
+                      "on-secondary-fixed-variant": "#004e5c",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "tertiary": "#4edea3",
+                      "surface-container-highest": "#353437",
+                      "on-tertiary-fixed": "#002113",
+                      "surface-tint": "#c0c1ff",
+                      "secondary-fixed": "#acedff",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "on-secondary-container": "#00424e",
+                      "surface": "#131315",
+                      "surface-container": "#201f22",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "surface-container-high": "#2a2a2c",
+                      "on-background": "#e5e1e4",
+                      "secondary-fixed-dim": "#4cd7f6",
+                      "error-container": "#93000a",
+                      "secondary": "#4cd7f6",
+                      "inverse-on-surface": "#313032",
+                      "background": "#131315",
+                      "on-secondary": "#003640",
+                      "on-primary-container": "#0d0096",
+                      "surface-container-lowest": "#0e0e10",
+                      "surface-bright": "#39393b",
+                      "on-error-container": "#ffdad6",
+                      "on-error": "#690005",
+                      "secondary-container": "#03b5d3",
+                      "on-tertiary-container": "#000703",
+                      "tertiary-fixed": "#6ffbbe",
+                      "error": "#ffb4ab",
+                      "on-surface": "#e5e1e4",
+                      "inverse-surface": "#e5e1e4",
+                      "on-surface-variant": "#c7c4d7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "sidebar-width": "280px",
+                      "gutter": "16px",
+                      "container-max": "1440px",
+                      "margin": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        body { background-color: #09090B; color: #e5e1e4; }
+        .glass-panel { background: rgba(24, 24, 27, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .glass-overlay { background: rgba(24, 24, 27, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid #27272A; }
+        .ambient-glow { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+        .primary-glow:hover { box-shadow: 0 0 12px rgba(99, 102, 241, 0.3); }
+        .ai-glow { box-shadow: 0 0 20px rgba(76, 215, 246, 0.15); border: 1px solid rgba(76, 215, 246, 0.3); }
+        
+        /* Node Map Styles */
+        .node-map-line { stroke: #464554; stroke-width: 2; fill: none; }
+        .node-map-circle { fill: #18181B; stroke: #c0c1ff; stroke-width: 2; }
+        .node-map-text { fill: #e5e1e4; font-family: 'Geist', sans-serif; font-size: 12px; font-weight: 500; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden font-body-md text-body-md">
+<!-- SideNavBar -->
+<nav class="w-sidebar-width h-screen fixed left-0 top-0 flex flex-col py-margin px-gutter gap-4 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant dark:border-outline-variant z-50 glass-panel">
+<!-- Header -->
+<div class="flex items-center gap-3 px-2 mb-4 mt-2">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-headline-md text-headline-md font-bold">
+                D
+            </div>
+<div class="flex flex-col">
+<span class="font-headline-md text-[16px] leading-[20px] font-bold text-on-surface dark:text-on-surface truncate">PostgreSQL Production</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[12px] text-tertiary-fixed-dim">Connected • public</span>
+</div>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-2 px-4 rounded-lg flex items-center justify-center gap-2 primary-glow transition-all hover:bg-primary-fixed">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Query
+        </button>
+<!-- Navigation -->
+<div class="flex-1 overflow-y-auto mt-4 space-y-1">
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 text-on-surface font-bold border-l-2 border-primary pl-4 bg-surface-variant/30" href="#">
+<span class="material-symbols-outlined">table_chart</span>
+<span class="font-label-md text-label-md">Tables</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 pl-4" href="#">
+<span class="material-symbols-outlined">view_quilt</span>
+<span class="font-label-md text-label-md">Views</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 pl-4" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 pl-4" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<!-- Footer Nav -->
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant/30">
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 pl-4" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Documentation</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant/50 transition-colors rounded-lg px-2 pl-4" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<div class="flex-1 ml-[280px] flex flex-col h-screen relative">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-16 px-margin bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40">
+<!-- Breadcrumbs / Navigation -->
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">dns</span>
+<a class="hover:text-primary transition-all" href="#">Postgres</a>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<a class="hover:text-primary transition-all" href="#">public</a>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="text-on-surface font-semibold">Overview</span>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="relative group hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-[18px]">search</span>
+<input class="bg-[#18181B] border border-[#27272A] rounded-lg pl-9 pr-4 py-1.5 text-[13px] text-on-surface placeholder:text-outline w-64 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="Search tables, columns... (Cmd+K)" type="text"/>
+</div>
+<button class="flex items-center gap-2 bg-secondary-container/10 text-secondary border border-secondary/30 px-3 py-1.5 rounded-lg font-label-md text-label-md hover:bg-secondary-container/20 transition-all">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    Ask AI
+                </button>
+<div class="flex items-center gap-2 border-l border-outline-variant/50 pl-4 ml-2">
+<button class="text-on-surface-variant hover:text-primary transition-all p-1">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center hover:border-primary transition-all ml-2 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A subtle, minimalist avatar icon in dark grey and white tones, suitable for a professional software development environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtoC0e3ILBTwvuVXAnwrIeaGMWP1NaFfh8MZEsLGTE9HiOHj32HiPGgE7VSF1Hs5HrGlTrojciaKtyER5XZ6l5ioNbo2KuFz92ZoZJHWSqlAq0bGx31Qf66uJRpxPJq80ziZ8xDbNfGWNiCasiBOD01pqYIUFuZoVyacToqUmURlADJxW-qUOcJHg2XDwVoDfOvaZfJz2wWbiu6PyFSJL722BfcIzzbGfHAPQ9wDCuJ6YrnjrbfuZGs2uAI-GmlSc59anaSSsVmIaQ"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-background p-margin flex">
+<div class="flex-1 max-w-container-max mx-auto flex gap-6">
+<!-- Left Column (Main Overview) -->
+<div class="flex-1 flex flex-col gap-8 pb-20">
+<!-- Page Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Database Overview</h1>
+<p class="text-on-surface-variant mt-2 font-body-lg text-[16px]">Understand your database structure before touching the data.</p>
+</div>
+<!-- Summary Metrics Bento -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-4 flex flex-col justify-center">
+<span class="text-on-surface-variant font-label-md text-label-md mb-1">Tables</span>
+<span class="font-headline-lg text-[28px] leading-tight text-on-surface">24</span>
+</div>
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-4 flex flex-col justify-center">
+<span class="text-on-surface-variant font-label-md text-label-md mb-1">Columns</span>
+<span class="font-headline-lg text-[28px] leading-tight text-on-surface">186</span>
+</div>
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-4 flex flex-col justify-center">
+<span class="text-on-surface-variant font-label-md text-label-md mb-1">Relationships</span>
+<span class="font-headline-lg text-[28px] leading-tight text-on-surface">12</span>
+</div>
+<div class="bg-error-container/10 border border-error/30 rounded-xl p-4 flex flex-col justify-center relative overflow-hidden group">
+<div class="absolute top-2 right-2 text-error opacity-50 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+</div>
+<span class="text-error font-label-md text-label-md mb-1">Sensitive Fields</span>
+<span class="font-headline-lg text-[28px] leading-tight text-error">4</span>
+</div>
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-4 flex flex-col justify-center">
+<span class="text-on-surface-variant font-label-md text-label-md mb-1">Total Records</span>
+<span class="font-headline-lg text-[28px] leading-tight text-primary">2.4M</span>
+</div>
+</div>
+<!-- Visualization Area -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-6 flex flex-col h-[300px] relative overflow-hidden">
+<div class="flex justify-between items-center mb-4 z-10">
+<h2 class="font-headline-md text-[18px] text-on-surface">Entity Map</h2>
+<button class="text-outline hover:text-primary transition-colors text-[13px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">fullscreen</span> Expand
+                            </button>
+</div>
+<!-- Pseudo-Canvas for Map -->
+<div class="absolute inset-0 top-16 flex items-center justify-center opacity-80">
+<svg height="100%" preserveaspectratio="xMidYMid meet" viewbox="0 0 600 200" width="100%">
+<!-- Lines -->
+<path class="node-map-line" d="M 150 100 L 300 100"></path>
+<path class="node-map-line" d="M 300 100 L 450 60"></path>
+<path class="node-map-line" d="M 300 100 L 450 140"></path>
+<path class="node-map-line stroke-dashed" d="M 150 100 L 300 180" stroke-dasharray="4"></path>
+<!-- Nodes -->
+<g transform="translate(150, 100)">
+<circle class="node-map-circle" r="24"></circle>
+<text class="node-map-text" text-anchor="middle" y="4">Users</text>
+</g>
+<g transform="translate(300, 100)">
+<circle class="node-map-circle stroke-tertiary" r="24"></circle>
+<text class="node-map-text" text-anchor="middle" y="4">Orders</text>
+</g>
+<g transform="translate(450, 60)">
+<circle class="node-map-circle stroke-error" r="24"></circle>
+<text class="node-map-text" text-anchor="middle" y="4">Pay</text>
+</g>
+<g transform="translate(450, 140)">
+<circle class="node-map-circle" r="24"></circle>
+<text class="node-map-text" text-anchor="middle" y="4">Items</text>
+</g>
+<g transform="translate(300, 180)">
+<circle class="node-map-circle" r="24"></circle>
+<text class="node-map-text" text-anchor="middle" y="4">Logs</text>
+</g>
+</svg>
+</div>
+</div>
+<!-- Core Tables -->
+<div>
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-headline-md text-[20px] text-on-surface">Core Tables</h2>
+<a class="text-primary text-[13px] hover:underline" href="#">View all 24 tables</a>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+<!-- Table Card 1 -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-5 hover:border-outline transition-colors group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">table_chart</span>
+<h3 class="font-headline-md text-[16px] text-on-surface">users</h3>
+</div>
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-[11px] font-code-sm text-on-surface-variant uppercase tracking-wider">core</span>
+<span class="px-2 py-0.5 rounded bg-surface-variant text-[11px] font-code-sm text-on-surface-variant uppercase tracking-wider">auth</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-[13px] text-on-surface-variant mb-4">
+<span>12 cols</span> • <span>2.4k rows</span> • <span>3 rels</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-variant hover:bg-outline-variant text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Open Data</button>
+<button class="border border-[#3F3F46] hover:bg-[#27272A] text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Structure</button>
+</div>
+</div>
+<!-- Table Card 2 -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-5 hover:border-outline transition-colors group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">table_chart</span>
+<h3 class="font-headline-md text-[16px] text-on-surface">orders</h3>
+</div>
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-[11px] font-code-sm text-on-surface-variant uppercase tracking-wider">commerce</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-[13px] text-on-surface-variant mb-4">
+<span>18 cols</span> • <span>8.9k rows</span> • <span>5 rels</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-variant hover:bg-outline-variant text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Open Data</button>
+<button class="border border-[#3F3F46] hover:bg-[#27272A] text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Structure</button>
+</div>
+</div>
+<!-- Table Card 3 -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-5 hover:border-outline transition-colors group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-error/10 rounded-bl-full blur-xl"></div>
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">table_chart</span>
+<h3 class="font-headline-md text-[16px] text-on-surface">payments</h3>
+</div>
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-error-container/30 text-[11px] font-code-sm text-error uppercase tracking-wider">sensitive</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-[13px] text-on-surface-variant mb-4">
+<span>14 cols</span> • <span>8.7k rows</span> • <span>4 rels</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-variant hover:bg-outline-variant text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Open Data</button>
+<button class="border border-[#3F3F46] hover:bg-[#27272A] text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Structure</button>
+</div>
+</div>
+<!-- Table Card 4 -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-5 hover:border-outline transition-colors group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">table_chart</span>
+<h3 class="font-headline-md text-[16px] text-on-surface">products</h3>
+</div>
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-[11px] font-code-sm text-on-surface-variant uppercase tracking-wider">catalog</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-[13px] text-on-surface-variant mb-4">
+<span>10 cols</span> • <span>580 rows</span> • <span>2 rels</span>
+</div>
+<div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-surface-variant hover:bg-outline-variant text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Open Data</button>
+<button class="border border-[#3F3F46] hover:bg-[#27272A] text-on-surface px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors flex-1 text-center">Structure</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Assistant & Activity) -->
+<div class="w-[320px] flex flex-col gap-6 flex-shrink-0 hidden lg:flex">
+<!-- Database Assistant Panel -->
+<div class="ai-glow bg-surface-container-low rounded-xl p-5 flex flex-col relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+<div class="flex items-center gap-2 mb-4 z-10">
+<span class="material-symbols-outlined text-secondary">smart_toy</span>
+<h3 class="font-headline-md text-[16px] text-on-surface">Database Assistant</h3>
+</div>
+<p class="text-[14px] text-on-surface-variant mb-4 leading-relaxed z-10">
+                            I found a common commerce structure. The <span class="font-code-sm text-primary">orders</span> table seems to be central, linking users to payments.
+                        </p>
+<div class="flex flex-col gap-2 mb-4 z-10">
+<button class="text-left bg-surface-variant/50 hover:bg-surface-variant border border-transparent hover:border-outline-variant text-[13px] text-on-surface py-2 px-3 rounded-lg transition-colors flex items-center justify-between">
+                                Show top queries for orders
+                                <span class="material-symbols-outlined text-[14px] text-outline">arrow_forward</span>
+</button>
+<button class="text-left bg-surface-variant/50 hover:bg-surface-variant border border-transparent hover:border-outline-variant text-[13px] text-on-surface py-2 px-3 rounded-lg transition-colors flex items-center justify-between">
+                                Map sensitive PII fields
+                                <span class="material-symbols-outlined text-[14px] text-outline">arrow_forward</span>
+</button>
+</div>
+<div class="relative mt-auto z-10">
+<input class="w-full bg-[#131315] border border-[#27272A] rounded-lg pl-3 pr-8 py-2 text-[13px] text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Ask about this database..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-outline hover:text-secondary">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+</div>
+<!-- Recent Activity -->
+<div class="bg-[#18181B] border border-[#27272A] rounded-xl p-5 flex-1">
+<h3 class="font-headline-md text-[16px] text-on-surface mb-4">Recent Activity</h3>
+<div class="relative border-l border-[#27272A] ml-2 space-y-6">
+<div class="relative pl-5">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-primary ring-4 ring-[#18181B]"></div>
+<p class="text-[13px] text-on-surface"><span class="font-medium">users</span> table opened</p>
+<p class="text-[11px] text-outline mt-0.5">2 minutes ago</p>
+</div>
+<div class="relative pl-5">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-[#27272A] ring-4 ring-[#18181B]"></div>
+<p class="text-[13px] text-on-surface-variant">Query executed on <span class="font-code-sm">orders</span></p>
+<p class="text-[11px] text-outline mt-0.5">15 minutes ago</p>
+</div>
+<div class="relative pl-5">
+<div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-[#27272A] ring-4 ring-[#18181B]"></div>
+<p class="text-[13px] text-on-surface-variant">Schema sync completed</p>
+<p class="text-[11px] text-outline mt-0.5">2 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Warning Banner -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-surface-container-high/90 backdrop-blur border border-error/20 text-error px-4 py-2 rounded-full text-[12px] font-medium flex items-center gap-2 shadow-lg z-20">
+<span class="material-symbols-outlined text-[14px]">gpp_maybe</span>
+                Production safeguards enabled (Read-only mode active for default role)
+            </div>
+</main>
+</div>
+</body></html>

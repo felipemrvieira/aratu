@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataPilot - Connect Database</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#acedff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "surface-dim": "#131315",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-container": "#0d0096",
+                        "surface-bright": "#39393b",
+                        "primary-container": "#8083ff",
+                        "background": "#131315",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-container-highest": "#353437",
+                        "on-background": "#e5e1e4",
+                        "on-surface-variant": "#c7c4d7",
+                        "error-container": "#93000a",
+                        "secondary": "#4cd7f6",
+                        "outline-variant": "#464554",
+                        "tertiary-container": "#00885d",
+                        "surface-container-high": "#2a2a2c",
+                        "primary": "#c0c1ff",
+                        "on-tertiary": "#003824",
+                        "primary-fixed": "#e1e0ff",
+                        "outline": "#908fa0",
+                        "on-primary-fixed": "#07006c",
+                        "on-error": "#690005",
+                        "inverse-primary": "#494bd6",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-container": "#000703",
+                        "surface-container": "#201f22",
+                        "inverse-surface": "#e5e1e4",
+                        "surface": "#131315",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-primary": "#1000a9",
+                        "on-secondary-fixed": "#001f26",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-surface": "#e5e1e4",
+                        "on-secondary-container": "#00424e",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#353437",
+                        "secondary-container": "#03b5d3",
+                        "surface-container-low": "#1c1b1d",
+                        "on-secondary": "#003640",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#313032",
+                        "surface-tint": "#c0c1ff",
+                        "on-tertiary-fixed": "#002113",
+                        "tertiary": "#4edea3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px",
+                        "container-max": "1440px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"],
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "code-sm": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400&amp;family=Geist:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Subtle animated background glow */
+        .ambient-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, rgba(19, 19, 21, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* Glass panel utilities */
+        .glass-panel {
+            background: rgba(28, 27, 29, 0.6); /* surface-container-low */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(70, 69, 84, 0.3); /* outline-variant */
+        }
+        
+        .ai-border-glow {
+            box-shadow: 0 0 15px rgba(76, 215, 246, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #353437; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #464554; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen relative overflow-x-hidden antialiased">
+<!-- Background Effect -->
+<div class="ambient-glow"></div>
+<!-- Header (Onboarding Style) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 glass-panel border-b border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">DataPilot</span>
+</div>
+<div class="h-4 w-px bg-outline-variant/40 mx-2"></div>
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                Step 1 of 3
+            </span>
+</div>
+<div class="flex items-center gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+                Need help?
+            </a>
+<button class="font-label-md text-label-md text-on-surface bg-surface-container-highest hover:bg-surface-variant px-4 py-2 rounded-lg transition-colors border border-outline-variant/30">
+                Skip and use demo
+            </button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-6xl mx-auto pt-32 pb-24 px-6">
+<div class="mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">New database connection</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Configure your database source to begin analyzing and querying data.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Form & Selection (col-span-8) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Database Selection Grid -->
+<div class="glass-panel rounded-xl p-6">
+<h2 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider">Select Database Engine</h2>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Selected Card -->
+<div class="relative rounded-lg border-2 border-primary bg-primary-container/10 p-4 cursor-pointer hover:bg-primary-container/20 transition-all flex flex-col items-center justify-center text-center gap-3">
+<div class="absolute top-2 right-2">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="material-symbols-outlined text-[32px] text-primary">database</span>
+<span class="font-label-md text-label-md text-on-surface">PostgreSQL</span>
+</div>
+<!-- Inactive Cards -->
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 cursor-pointer hover:bg-surface-container-highest transition-all flex flex-col items-center justify-center text-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">dns</span>
+<span class="font-label-md text-label-md text-on-surface-variant">MySQL</span>
+</div>
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 cursor-pointer hover:bg-surface-container-highest transition-all flex flex-col items-center justify-center text-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">folder_data</span>
+<span class="font-label-md text-label-md text-on-surface-variant">SQLite</span>
+</div>
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 cursor-pointer hover:bg-surface-container-highest transition-all flex flex-col items-center justify-center text-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">cloud_sync</span>
+<span class="font-label-md text-label-md text-on-surface-variant">MongoDB</span>
+</div>
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 cursor-pointer hover:bg-surface-container-highest transition-all flex flex-col items-center justify-center text-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">storage</span>
+<span class="font-label-md text-label-md text-on-surface-variant">SQL Server</span>
+</div>
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 cursor-pointer hover:bg-surface-container-highest transition-all flex flex-col items-center justify-center text-center gap-3">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">memory</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Redis</span>
+</div>
+</div>
+</div>
+<!-- Connection Details Form -->
+<div class="glass-panel rounded-xl flex flex-col overflow-hidden">
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant/30 bg-surface-container-low/50">
+<button class="flex-1 py-4 text-center font-label-md text-label-md text-primary border-b-2 border-primary bg-primary/5 transition-colors">
+                            Connection URL
+                        </button>
+<button class="flex-1 py-4 text-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">
+                            Manual setup
+                        </button>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Connection Name -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Connection Name</label>
+<input class="w-full bg-surface-container border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-outline shadow-inner" type="text" value="Main Production Cluster"/>
+</div>
+<!-- Environment Segmented Control -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Environment</label>
+<div class="flex bg-surface-container-highest rounded-lg p-1 border border-outline-variant/30">
+<button class="flex-1 py-2 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Local</button>
+<button class="flex-1 py-2 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">Staging</button>
+<button class="flex-1 py-2 rounded-md font-label-md text-label-md bg-surface border border-outline-variant/50 text-on-surface shadow-sm transition-colors">Production</button>
+</div>
+</div>
+<!-- Database URL -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Database URL</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">link</span>
+<input class="w-full bg-surface-container border border-outline-variant/50 rounded-lg pl-12 pr-10 py-3 font-code-sm text-code-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-inner font-mono tracking-wide" type="password" value="postgres://admin:••••••••@prod-db.internal:5432/main_app"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- SSL Mode -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">SSL Mode</label>
+<div class="relative">
+<select class="w-full bg-surface-container border border-outline-variant/50 rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none shadow-inner">
+<option>Require (Default)</option>
+<option>Verify-CA</option>
+<option>Verify-Full</option>
+<option>Disable</option>
+</select>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Security Note -->
+<div class="flex items-start gap-3 mt-2 p-4 rounded-lg bg-surface-container border border-outline-variant/20">
+<span class="material-symbols-outlined text-tertiary text-[20px]">lock</span>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Your credentials are encrypted at rest using AES-256 and are never exposed directly in the UI after initial setup.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: AI & Safety (col-span-4) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- AI Assistant -->
+<div class="glass-panel rounded-xl p-6 border-l-4 border-l-secondary ai-border-glow bg-gradient-to-br from-surface-container-low to-surface-container">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[18px]">auto_awesome</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">AI Assistant</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-5 text-sm">Paste your database URL and I’ll detect the engine, port, and security settings automatically.</p>
+<button class="w-full py-2.5 px-4 rounded-lg border border-secondary/50 text-secondary font-label-md text-label-md hover:bg-secondary/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">magic_button</span>
+                        Analyze connection string
+                    </button>
+</div>
+<!-- Production Status Alert -->
+<div class="rounded-xl p-4 bg-tertiary-container/20 border border-tertiary/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary mt-0.5">verified_user</span>
+<div>
+<h4 class="font-label-md text-label-md text-tertiary mb-1">Production safeguards enabled</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs">Destructive queries (DROP, DELETE without WHERE) require multi-factor confirmation.</p>
+</div>
+</div>
+<!-- Safety Settings -->
+<div class="glass-panel rounded-xl p-6">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider">Safety &amp; Permissions</h3>
+<div class="flex flex-col gap-5">
+<!-- Toggle 1 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex flex-col pr-4">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Read-only mode</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-xs mt-0.5">Prevent any write operations</span>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-surface-container-highest border border-outline-variant/50 transition-colors">
+<span class="inline-block h-4 w-4 transform rounded-full bg-outline translate-x-1 transition-transform"></span>
+</div>
+</label>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- Toggle 2 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex flex-col pr-4">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Require confirmation</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-xs mt-0.5">For long-running queries</span>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors">
+<span class="inline-block h-4 w-4 transform rounded-full bg-on-primary translate-x-6 transition-transform"></span>
+</div>
+</label>
+<div class="h-px w-full bg-outline-variant/20"></div>
+<!-- Toggle 3 -->
+<label class="flex items-center justify-between cursor-pointer group">
+<div class="flex flex-col pr-4">
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Mask sensitive fields</span>
+<span class="font-label-md text-label-md text-on-surface-variant text-xs mt-0.5">Auto-hide PII in results</span>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors">
+<span class="inline-block h-4 w-4 transform rounded-full bg-on-primary translate-x-6 transition-transform"></span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-8 pt-6 border-t border-outline-variant/20 flex items-center justify-between">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg font-label-md text-label-md text-tertiary bg-tertiary/10 border border-tertiary/30 hover:bg-tertiary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                Connection verified
+            </button>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-highest transition-colors">
+                    Back
+                </button>
+<button class="px-6 py-2.5 rounded-lg font-label-md text-label-md text-on-primary bg-primary hover:bg-primary-fixed shadow-[0_0_12px_rgba(192,193,255,0.3)] transition-all">
+                    Connect database
+                </button>
+</div>
+</div>
+</main>
+</body></html>

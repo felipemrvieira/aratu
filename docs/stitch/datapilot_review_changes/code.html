@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataPilot - Review Changes</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#39393b",
+                    "on-primary": "#1000a9",
+                    "on-tertiary-container": "#000703",
+                    "on-tertiary": "#003824",
+                    "inverse-on-surface": "#313032",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-container": "#03b5d3",
+                    "inverse-primary": "#494bd6",
+                    "surface-variant": "#353437",
+                    "on-background": "#e5e1e4",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "error-container": "#93000a",
+                    "primary-fixed": "#e1e0ff",
+                    "on-primary-container": "#0d0096",
+                    "on-primary-fixed": "#07006c",
+                    "outline-variant": "#464554",
+                    "tertiary": "#4edea3",
+                    "on-surface": "#e5e1e4",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-surface-variant": "#c7c4d7",
+                    "surface-container-highest": "#353437",
+                    "surface": "#131315",
+                    "secondary": "#4cd7f6",
+                    "primary": "#c0c1ff",
+                    "background": "#131315",
+                    "primary-container": "#8083ff",
+                    "on-secondary-fixed-variant": "#004e5c",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "surface-container-low": "#1c1b1d",
+                    "on-tertiary-fixed": "#002113",
+                    "secondary-fixed": "#acedff",
+                    "on-secondary": "#003640",
+                    "inverse-surface": "#e5e1e4",
+                    "outline": "#908fa0",
+                    "on-secondary-container": "#00424e",
+                    "on-secondary-fixed": "#001f26",
+                    "surface-container-lowest": "#0e0e10",
+                    "surface-container-high": "#2a2a2c",
+                    "surface-tint": "#c0c1ff",
+                    "tertiary-container": "#00885d",
+                    "surface-dim": "#131315",
+                    "surface-container": "#201f22",
+                    "secondary-fixed-dim": "#4cd7f6",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-width": "280px",
+                    "container-max": "1440px",
+                    "unit": "4px",
+                    "margin": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Geist", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"],
+                    "label-md": ["Geist", "sans-serif"],
+                    "headline-lg-mobile": ["Geist", "sans-serif"],
+                    "headline-lg": ["Geist", "sans-serif"],
+                    "code-sm": ["JetBrains Mono", "monospace"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "headline-md": ["Geist", "sans-serif"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                    "code-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353437; /* surface-variant */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #464554; /* outline-variant */
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.6); /* approx #18181B with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* AI Glow animation */
+        @keyframes ai-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(192, 193, 255, 0.1); }
+            70% { box-shadow: 0 0 0 10px rgba(192, 193, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(192, 193, 255, 0); }
+        }
+        .ai-glow-active {
+            animation: ai-pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen w-full flex overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- Left Sidebar: SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-sidebar-width bg-surface-container-low border-r border-outline-variant shadow-none flex flex-col p-margin z-20 flex-shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold">D</div>
+<div>
+<h1 class="font-display-lg text-[20px] leading-tight font-bold text-primary">DataPilot</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">AI-Native Client</p>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary text-on-primary hover:bg-primary-fixed-dim transition-colors py-2 px-4 rounded-lg font-label-md text-label-md font-bold flex items-center justify-center gap-2 mb-8 shadow-[0_0_12px_rgba(192,193,255,0.15)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Connection
+        </button>
+<!-- Main Nav -->
+<ul class="flex flex-col gap-1 flex-1">
+<li>
+<a class="text-primary font-bold bg-primary-container/10 rounded-lg cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">database</span>
+<span class="font-label-md text-label-md">Databases</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+<span class="font-label-md text-label-md">Query Builder</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">schema</span>
+<span class="font-label-md text-label-md">Schemas</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+<!-- Footer Nav -->
+<ul class="flex flex-col gap-1 mt-auto pt-4 border-t border-outline-variant">
+<li>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="font-label-md text-label-md">Docs</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-200 flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-sidebar-width flex-1 flex flex-col h-full bg-background relative z-10">
+<!-- Top Bar: Breadcrumb (Glassmorphism) -->
+<div class="sticky top-0 z-30 w-full px-margin py-3 border-b border-outline-variant bg-surface/80 backdrop-blur-xl flex items-center justify-between">
+<div class="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">dns</span>
+<span class="hover:text-on-surface cursor-pointer transition-colors">PostgreSQL</span>
+<span class="text-outline">/</span>
+<span class="hover:text-on-surface cursor-pointer transition-colors">public</span>
+<span class="text-outline">/</span>
+<span class="hover:text-on-surface cursor-pointer transition-colors">users</span>
+<span class="text-outline">/</span>
+<span class="text-primary font-bold">Review Changes</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Canvas -->
+<div class="flex-1 overflow-y-auto">
+<div class="max-w-[1000px] mx-auto py-8 px-margin flex flex-col gap-8">
+<!-- Header -->
+<header>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Review Changes</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">Preview and confirm your changes before applying them to production.</p>
+</header>
+<!-- Production Warning Banner -->
+<div class="bg-[#1c1213] border border-error-container rounded-lg p-4 flex items-start gap-4 shadow-[0_0_20px_rgba(255,180,171,0.05)]">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h3 class="font-label-md text-label-md font-bold text-error">Production Database</h3>
+<p class="font-body-md text-[14px] text-on-error-container mt-1">You are about to modify live data. Review every change carefully. These actions cannot be easily undone.</p>
+</div>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-4 gap-gutter">
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary text-[20px] mb-2">edit_document</span>
+<div class="font-display-lg text-[24px] font-bold text-on-surface">3</div>
+<div class="font-label-md text-[12px] text-on-surface-variant uppercase tracking-wider">Rows Edited</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant flex flex-col justify-between">
+<span class="material-symbols-outlined text-tertiary text-[20px] mb-2">add_box</span>
+<div class="font-display-lg text-[24px] font-bold text-on-surface">1</div>
+<div class="font-label-md text-[12px] text-on-surface-variant uppercase tracking-wider">Row Inserted</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant flex flex-col justify-between">
+<span class="material-symbols-outlined text-error text-[20px] mb-2">delete</span>
+<div class="font-display-lg text-[24px] font-bold text-on-surface">1</div>
+<div class="font-label-md text-[12px] text-on-surface-variant uppercase tracking-wider">Marked Delete</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-transparent to-[#93000a]/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-outline text-[20px] mb-2">policy</span>
+<div class="font-label-md text-[16px] font-bold text-[#ffb4ab]">Medium</div>
+<div class="font-label-md text-[12px] text-on-surface-variant uppercase tracking-wider">Risk Level</div>
+</div>
+</div>
+<!-- Staged Changes List -->
+<div class="flex flex-col gap-6">
+<h2 class="font-headline-md text-[20px] border-b border-outline-variant pb-2">Staged Changes</h2>
+<!-- 1. Edited Rows (Visual Diff) -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container px-4 py-3 border-b border-outline-variant flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[18px]">edit</span>
+<span class="font-label-md text-label-md font-bold">Edited row</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant bg-surface px-2 py-0.5 rounded border border-outline-variant">usr_1024</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-[12px] px-2 py-1 rounded hover:bg-surface-variant transition-colors border border-transparent">Undo</button>
+<button class="text-primary hover:text-primary-fixed font-label-md text-[12px] px-2 py-1 rounded hover:bg-primary-container/10 transition-colors border border-transparent">Edit</button>
+</div>
+</div>
+<div class="p-0 overflow-x-auto">
+<table class="w-full text-left font-code-sm text-code-sm">
+<thead>
+<tr class="text-on-surface-variant border-b border-outline-variant/50 bg-[#151518]">
+<th class="py-2 px-4 font-normal w-1/4">Field</th>
+<th class="py-2 px-4 font-normal w-3/8">Before</th>
+<th class="py-2 px-4 font-normal w-3/8">After</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50 text-[#c7c4d7]">
+<tr class="hover:bg-surface/50 transition-colors">
+<td class="py-2.5 px-4 text-on-surface">email</td>
+<td class="py-2.5 px-4"><span class="bg-[#3e1b1b] text-[#ffb4ab] px-1.5 py-0.5 rounded border border-[#690005]">ana.old@mail.com</span></td>
+<td class="py-2.5 px-4"><span class="bg-[#0b3123] text-[#6ffbbe] px-1.5 py-0.5 rounded border border-[#005236]">ana.new@mail.com</span></td>
+</tr>
+<tr class="hover:bg-surface/50 transition-colors">
+<td class="py-2.5 px-4 text-on-surface">status</td>
+<td class="py-2.5 px-4"><span class="bg-[#3e1b1b] text-[#ffb4ab] px-1.5 py-0.5 rounded border border-[#690005]">inactive</span></td>
+<td class="py-2.5 px-4"><span class="bg-[#0b3123] text-[#6ffbbe] px-1.5 py-0.5 rounded border border-[#005236]">active</span></td>
+</tr>
+<tr class="hover:bg-surface/50 transition-colors">
+<td class="py-2.5 px-4 text-on-surface">updated_at</td>
+<td class="py-2.5 px-4 text-outline">2026-06-20 14:32:00</td>
+<td class="py-2.5 px-4"><span class="bg-[#0b3123] text-[#6ffbbe] px-1.5 py-0.5 rounded border border-[#005236]">now()</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 2. Inserted Rows -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="bg-surface-container px-4 py-3 border-b border-outline-variant flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary text-[18px]">add</span>
+<span class="font-label-md text-label-md font-bold">Inserted row</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-[12px] px-2 py-1 rounded hover:bg-surface-variant transition-colors border border-transparent">Undo</button>
+<button class="text-primary hover:text-primary-fixed font-label-md text-[12px] px-2 py-1 rounded hover:bg-primary-container/10 transition-colors border border-transparent">Edit</button>
+</div>
+</div>
+<div class="p-4 grid grid-cols-2 gap-4 font-code-sm text-code-sm text-on-surface-variant">
+<div><span class="text-outline inline-block w-24">name:</span> <span class="text-[#6ffbbe]">Lucas Pereira</span></div>
+<div><span class="text-outline inline-block w-24">email:</span> <span class="text-[#6ffbbe]">lucas@example.com</span></div>
+<div><span class="text-outline inline-block w-24">status:</span> <span class="text-[#6ffbbe]">active</span></div>
+<div><span class="text-outline inline-block w-24">role:</span> <span class="text-[#6ffbbe]">user</span></div>
+</div>
+</div>
+<!-- 3. Deleted Rows -->
+<div class="bg-surface-container-low border border-error-container/50 rounded-xl overflow-hidden shadow-sm relative">
+<div class="absolute inset-0 bg-error-container/5 pointer-events-none"></div>
+<div class="bg-[#1c1213] px-4 py-3 border-b border-error-container/30 flex justify-between items-center relative z-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error text-[18px]">remove</span>
+<span class="font-label-md text-label-md font-bold text-error">Marked for delete</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant bg-[#2d1515] px-2 py-0.5 rounded border border-error-container/50">usr_992</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-on-surface font-label-md text-[12px] px-2 py-1 rounded hover:bg-surface-variant transition-colors border border-transparent">Undo</button>
+</div>
+</div>
+<div class="p-4 flex items-center gap-6 font-code-sm text-code-sm text-on-surface-variant relative z-10 opacity-60 line-through decoration-error/50">
+<span>Test User</span>
+<span>test@example.com</span>
+<span>inactive</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Panel: Safety Check -->
+<aside class="w-96 h-full border-l border-outline-variant bg-surface-container flex flex-col flex-shrink-0 relative z-20 shadow-[-10px_0_30px_rgba(0,0,0,0.5)]">
+<!-- Header -->
+<div class="p-margin border-b border-outline-variant flex justify-between items-center bg-surface-container-high">
+<h2 class="font-headline-md text-[18px] text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">shield_locked</span>
+                Safety Check
+            </h2>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-margin flex flex-col gap-8">
+<!-- Risk Analysis -->
+<div class="flex flex-col gap-4">
+<h3 class="font-label-md text-[12px] uppercase tracking-wider text-outline">Risk Analysis</h3>
+<ul class="flex flex-col gap-3 font-body-md text-[14px]">
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-error text-[18px]">public</span>
+                        Production environment
+                    </li>
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+                        1 destructive action detected
+                    </li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-outline text-[18px]">badge</span>
+                        2 PII fields affected
+                    </li>
+<li class="flex items-center gap-3 text-tertiary">
+<span class="material-symbols-outlined text-tertiary text-[18px]">history</span>
+                        Rollback supported
+                    </li>
+</ul>
+</div>
+<!-- SQL Preview -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<h3 class="font-label-md text-[12px] uppercase tracking-wider text-outline">Generated SQL</h3>
+<div class="flex gap-2">
+<button class="text-outline hover:text-primary transition-colors flex items-center gap-1" title="Explain SQL">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+</button>
+<button class="text-outline hover:text-on-surface transition-colors flex items-center gap-1" title="Copy">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="bg-[#09090b] rounded-lg border border-outline-variant p-3 overflow-x-auto relative group">
+<!-- Subtle AI glow behind code block -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none rounded-lg opacity-50"></div>
+<pre class="font-code-sm text-[12px] leading-[1.6] text-on-surface-variant relative z-10"><span class="text-primary">BEGIN</span>;
+
+<span class="text-outline">-- Edit usr_1024</span>
+<span class="text-primary">UPDATE</span> public.users
+<span class="text-primary">SET</span> email = <span class="text-tertiary">'ana.new@mail.com'</span>,
+    status = <span class="text-tertiary">'active'</span>,
+    updated_at = <span class="text-primary">now</span>()
+<span class="text-primary">WHERE</span> id = <span class="text-secondary">1024</span>;
+
+<span class="text-outline">-- Insert new user</span>
+<span class="text-primary">INSERT INTO</span> public.users (name, email)
+<span class="text-primary">VALUES</span> (<span class="text-tertiary">'Lucas Pereira'</span>, <span class="text-tertiary">'lucas@example.com'</span>);
+
+<span class="text-outline">-- Delete usr_992</span>
+<span class="text-primary">DELETE FROM</span> public.users
+<span class="text-primary">WHERE</span> id = <span class="text-secondary">992</span>;
+
+<span class="text-primary">COMMIT</span>;</pre>
+</div>
+</div>
+<!-- Checklist -->
+<div class="flex flex-col gap-4 mt-auto pt-4 border-t border-outline-variant">
+<h3 class="font-label-md text-[12px] uppercase tracking-wider text-outline">Confirmation Checklist</h3>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant bg-surface text-primary focus:ring-primary focus:ring-offset-surface-container cursor-pointer transition-colors" type="checkbox"/>
+<span class="font-body-md text-[14px] text-on-surface-variant group-hover:text-on-surface transition-colors">I reviewed edited fields</span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant bg-surface text-primary focus:ring-primary focus:ring-offset-surface-container cursor-pointer transition-colors" type="checkbox"/>
+<span class="font-body-md text-[14px] text-on-surface-variant group-hover:text-on-surface transition-colors">I understand this affects production</span>
+</label>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col gap-4 bg-surface-container-high p-4 rounded-xl border border-outline-variant shadow-inner">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-[12px] text-on-surface" for="confirm-input">Type <strong class="text-primary tracking-wider font-code-sm">APPLY</strong> to confirm</label>
+<input autocomplete="off" class="bg-surface border border-outline-variant rounded-lg p-2.5 font-code-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all uppercase placeholder-outline/30" id="confirm-input" placeholder="" type="text"/>
+</div>
+<div class="flex gap-3 mt-2">
+<button class="flex-1 py-2.5 px-4 rounded-lg font-label-md text-[14px] font-bold text-on-surface-variant border border-outline-variant hover:bg-surface-variant transition-colors">
+                        Discard all
+                    </button>
+<button class="flex-1 py-2.5 px-4 rounded-lg font-label-md text-[14px] font-bold bg-outline-variant text-outline opacity-50 cursor-not-allowed transition-all flex items-center justify-center gap-2" disabled="" id="apply-btn">
+<span class="material-symbols-outlined text-[18px]" id="btn-icon">lock</span>
+                        Apply Changes
+                    </button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Simple interaction script for the apply button -->
+<script>
+        const input = document.getElementById('confirm-input');
+        const btn = document.getElementById('apply-btn');
+        const btnIcon = document.getElementById('btn-icon');
+
+        input.addEventListener('input', (e) => {
+            if (e.target.value.toUpperCase() === 'APPLY') {
+                btn.disabled = false;
+                // Active state styling
+                btn.className = "flex-1 py-2.5 px-4 rounded-lg font-label-md text-[14px] font-bold bg-primary text-on-primary hover:bg-primary-fixed transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(192,193,255,0.4)] ai-glow-active cursor-pointer";
+                btnIcon.textContent = "lock_open";
+            } else {
+                btn.disabled = true;
+                // Disabled state styling
+                btn.className = "flex-1 py-2.5 px-4 rounded-lg font-label-md text-[14px] font-bold bg-outline-variant text-outline opacity-50 cursor-not-allowed transition-all flex items-center justify-center gap-2";
+                btnIcon.textContent = "lock";
+            }
+        });
+    </script>
+</body></html>

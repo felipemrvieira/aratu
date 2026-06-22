@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataPilot - Safety Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#8083ff",
+                        "surface-container-lowest": "#0e0e10",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "outline-variant": "#464554",
+                        "surface-container-low": "#1c1b1d",
+                        "inverse-on-surface": "#313032",
+                        "surface-container-highest": "#353437",
+                        "inverse-primary": "#494bd6",
+                        "surface-container": "#201f22",
+                        "surface-variant": "#353437",
+                        "surface-tint": "#c0c1ff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#e1e0ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-surface": "#e5e1e4",
+                        "on-tertiary-fixed": "#002113",
+                        "on-background": "#e5e1e4",
+                        "secondary-container": "#03b5d3",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "error-container": "#93000a",
+                        "surface-bright": "#39393b",
+                        "secondary": "#4cd7f6",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-secondary-container": "#00424e",
+                        "on-primary-container": "#0d0096",
+                        "tertiary": "#4edea3",
+                        "on-tertiary": "#003824",
+                        "on-primary-fixed": "#07006c",
+                        "secondary-fixed": "#acedff",
+                        "background": "#131315",
+                        "on-primary": "#1000a9",
+                        "tertiary-container": "#00885d",
+                        "outline": "#908fa0",
+                        "primary": "#c0c1ff",
+                        "on-tertiary-container": "#000703",
+                        "surface-container-high": "#2a2a2c",
+                        "on-error": "#690005",
+                        "surface-dim": "#131315",
+                        "inverse-surface": "#e5e1e4",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface": "#131315",
+                        "on-secondary-fixed": "#001f26",
+                        "on-secondary": "#003640",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "sidebar-width": "280px",
+                        "margin": "24px",
+                        "container-max": "1440px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "code-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for deep dark theme */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #353437; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #464554; }
+        
+        /* Toggle animations */
+        .toggle-switch-input:checked + .toggle-switch-bg { background-color: #8083ff; }
+        .toggle-switch-input:checked + .toggle-switch-bg .toggle-switch-dot { transform: translateX(100%); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased overflow-hidden flex h-screen">
+<!-- Shared Component: SideNavBar -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface-dim border-r border-outline-variant shadow-sm flex flex-col h-full py-6 z-20">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-container to-inverse-primary flex items-center justify-center shadow-[0_0_12px_rgba(99,102,241,0.3)]">
+<span class="material-symbols-outlined text-surface-container-lowest text-xl" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">DataPilot</h1>
+<p class="font-label-md text-label-md text-on-surface-variant text-[11px] uppercase tracking-wider">AI-Native Client</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full flex items-center justify-center gap-2 bg-inverse-primary hover:bg-primary-container transition-colors duration-200 text-surface-container-lowest font-label-md text-label-md py-2.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Query
+            </button>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-md text-label-md">Databases</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-md text-label-md">Query Builder</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">schema</span>
+<span class="font-label-md text-label-md">Schemas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary bg-primary-container/10 border-l-4 border-primary rounded-r-lg scale-[0.98] transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md font-bold">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<div class="flex items-center gap-3 p-3 rounded-lg border border-surface-container-high bg-surface-container-lowest">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A small, circular avatar portrait of a modern software developer in a dark studio setting with cool blue rim lighting, facing slightly off-camera." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClk9czFcxEYTcuWCXxiWBiYESCQLzYFnguBNK5SxqpR7AmFHv5tOnDGmQYumIPH1gqiGwNgOZLPNeXdrCAtepYcUNTE3R5pQ1Ug6leLbpq7R5s8HCg9rvqy9Y7fqpA8t1PMX7j-54Nm9-1gLXWnVAhZ5TCnXVF4vqwOasAu2o32ekCtOELZtyXtpwhX7_pDsrsVpiYpO7_Xwe9QkBUEEWkgikGmX4polxTNbV6FBkcgMReTxeVoDQIVBQq3nISlaj1UanM-B_1lH7j"/>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">Admin User</p>
+<p class="text-[12px] text-on-surface-variant truncate">admin@datapilot.local</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area Wrapper -->
+<div class="flex-1 ml-sidebar-width flex flex-col h-screen bg-background relative overflow-hidden">
+<!-- Shared Component: TopAppBar -->
+<header class="docked full-width top-0 sticky bg-surface/80 backdrop-blur-xl border-b border-outline-variant flex justify-between items-center h-16 px-margin z-10">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md" href="#">Explorer</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md" href="#">Console</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="font-label-md text-label-md px-4 py-1.5 rounded-md border border-outline-variant text-on-surface hover:bg-surface-container transition-colors">
+                    Connect
+                </button>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto px-margin py-8">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header & Breadcrumbs -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md mb-4 opacity-70">
+<span class="material-symbols-outlined text-[16px]">database</span>
+<span>PostgreSQL</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Settings</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Safety</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-2">Safety Settings</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Control how DataPilot protects your data and prevents risky operations across your environments.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-surface-container-highest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+                                Reset to Defaults
+                            </button>
+<button class="px-4 py-2 rounded-lg bg-inverse-primary text-surface-container-lowest font-label-md text-label-md hover:brightness-110 shadow-[0_0_12px_rgba(99,102,241,0.2)] transition-all">
+                                Save Changes
+                            </button>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 border-b border-surface-container-highest mb-8">
+<a class="font-label-md text-label-md text-on-surface-variant pb-3 hover:text-on-surface transition-colors" href="#">General</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-3" href="#">Safety</a>
+<a class="font-label-md text-label-md text-on-surface-variant pb-3 hover:text-on-surface transition-colors" href="#">Permissions</a>
+<a class="font-label-md text-label-md text-on-surface-variant pb-3 hover:text-on-surface transition-colors flex items-center gap-1" href="#"><span class="material-symbols-outlined text-[16px] text-secondary">auto_awesome</span> AI Integration</a>
+<a class="font-label-md text-label-md text-on-surface-variant pb-3 hover:text-on-surface transition-colors" href="#">Connections</a>
+<a class="font-label-md text-label-md text-on-surface-variant pb-3 hover:text-on-surface transition-colors" href="#">Appearance</a>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column (Main Settings) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Environment Protection -->
+<div class="bg-surface-container-low border border-surface-container-highest rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface">shield_locked</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-[18px]">Environment Protection</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Guardrails for critical databases</p>
+</div>
+</div>
+<div class="px-3 py-1 bg-error-container/10 border border-error/20 rounded-full flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-label-md text-label-md text-error text-[12px] uppercase tracking-wider">Production Active</span>
+</div>
+</div>
+<div class="space-y-4">
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-highest/50 transition-colors cursor-pointer group">
+<div>
+<p class="font-label-md text-label-md text-on-surface">Require confirmation for UPDATE / DELETE</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px]">Prompt for verification before executing modifying queries.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-switch-input absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 opacity-0" id="toggle1" name="toggle1" type="checkbox"/>
+<div class="toggle-switch-bg block overflow-hidden h-6 rounded-full bg-surface-container-highest border border-outline-variant transition-colors duration-200">
+<div class="toggle-switch-dot absolute top-[2px] left-[2px] bg-surface-container-lowest w-5 h-5 rounded-full shadow-sm transition-transform duration-200 flex items-center justify-center"></div>
+</div>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-highest/50 transition-colors cursor-pointer group">
+<div>
+<p class="font-label-md text-label-md text-on-surface">Block destructive bulk operations</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px]">Prevent table truncations or dropping critical schemas.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-switch-input absolute block w-5 h-5 rounded-full z-10 opacity-0" type="checkbox"/>
+<div class="toggle-switch-bg block overflow-hidden h-6 rounded-full bg-surface-container-highest border border-outline-variant transition-colors duration-200">
+<div class="toggle-switch-dot absolute top-[2px] left-[2px] bg-surface-container-lowest w-5 h-5 rounded-full shadow-sm transition-transform duration-200"></div>
+</div>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-highest/50 transition-colors cursor-pointer group">
+<div>
+<p class="font-label-md text-label-md text-on-surface">Force queries into implicit transactions</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px]">Wrap manual queries in BEGIN/ROLLBACK blocks by default.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-switch-input absolute block w-5 h-5 rounded-full z-10 opacity-0" type="checkbox"/>
+<div class="toggle-switch-bg block overflow-hidden h-6 rounded-full bg-surface-container-highest border border-outline-variant transition-colors duration-200">
+<div class="toggle-switch-dot absolute top-[2px] left-[2px] bg-surface-variant w-5 h-5 rounded-full shadow-sm transition-transform duration-200"></div>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Edit Mode & Query Safety -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Edit Mode -->
+<div class="bg-surface-container-low border border-surface-container-highest rounded-xl p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface text-[18px] mb-1">Data Edit Mode</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px] mb-5">Define how inline edits behave.</p>
+<div class="space-y-3">
+<div class="p-3 border border-outline-variant rounded-lg flex items-center justify-between opacity-50 bg-surface-dim">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">edit</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Direct Edit</p>
+<p class="font-body-md text-body-md text-[12px] text-on-surface-variant">Disabled in Production</p>
+</div>
+</div>
+</div>
+<div class="p-3 border border-primary/50 bg-primary-container/5 rounded-lg flex items-center justify-between relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-1 bg-primary"></div>
+<div class="flex items-center gap-3 pl-2">
+<span class="material-symbols-outlined text-primary">layers</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Staged Changes</p>
+<p class="font-body-md text-body-md text-[12px] text-on-surface-variant">Review edits before applying</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+</div>
+<div class="p-3 border border-surface-container-highest hover:border-outline-variant transition-colors rounded-lg flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">visibility</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Read-only</p>
+<p class="font-body-md text-body-md text-[12px] text-on-surface-variant">Disable all inline edits</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Query Safety Limits -->
+<div class="bg-surface-container-low border border-surface-container-highest rounded-xl p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface text-[18px] mb-1">Execution Limits</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px] mb-5">Resource and fetch boundaries.</p>
+<div class="space-y-5">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2">Default Row Limit</label>
+<div class="flex bg-surface-dim border border-outline-variant rounded-lg overflow-hidden focus-within:border-primary transition-colors">
+<span class="px-3 py-2 text-on-surface-variant bg-surface-container border-r border-outline-variant font-code-sm">LIMIT</span>
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 font-code-sm text-code-sm px-3 py-2" type="number" value="100"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-2">Query Timeout (Seconds)</label>
+<div class="flex bg-surface-dim border border-outline-variant rounded-lg overflow-hidden focus-within:border-primary transition-colors">
+<span class="px-3 py-2 text-on-surface-variant bg-surface-container border-r border-outline-variant"><span class="material-symbols-outlined text-[18px]">timer</span></span>
+<input class="w-full bg-transparent border-none text-on-surface focus:ring-0 font-code-sm text-code-sm px-3 py-2" type="number" value="30"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sensitive Data (PII) -->
+<div class="bg-surface-container-low border border-surface-container-highest rounded-xl p-6">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center border border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary">fingerprint</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-[18px]">Sensitive Data (PII)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Automatic masking and handling rules.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<label class="flex items-start gap-3 p-3 border border-surface-container-highest rounded-lg bg-surface-dim/50 cursor-pointer">
+<div class="relative inline-block w-10 mt-0.5 shrink-0">
+<input checked="" class="toggle-switch-input absolute opacity-0" type="checkbox"/>
+<div class="toggle-switch-bg h-5 rounded-full bg-surface-container-highest border border-outline-variant transition-colors duration-200">
+<div class="toggle-switch-dot absolute top-[2px] left-[2px] bg-surface-container-lowest w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Auto-Mask Display</p>
+<p class="font-body-md text-body-md text-[12px] text-on-surface-variant">Obscure values like passwords and emails in grid view.</p>
+</div>
+</label>
+<label class="flex items-start gap-3 p-3 border border-surface-container-highest rounded-lg bg-surface-dim/50 cursor-pointer">
+<div class="relative inline-block w-10 mt-0.5 shrink-0">
+<input checked="" class="toggle-switch-input absolute opacity-0" type="checkbox"/>
+<div class="toggle-switch-bg h-5 rounded-full bg-surface-container-highest border border-outline-variant transition-colors duration-200">
+<div class="toggle-switch-dot absolute top-[2px] left-[2px] bg-surface-container-lowest w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Export Warnings</p>
+<p class="font-body-md text-body-md text-[12px] text-on-surface-variant">Require secondary auth when exporting CSVs containing PII.</p>
+</div>
+</label>
+</div>
+<div class="border-t border-surface-container-highest pt-4">
+<p class="font-label-md text-label-md text-on-surface-variant mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">travel_explore</span> Automatically Detected Fields
+                                </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 bg-surface-container border border-outline-variant rounded text-on-surface font-code-sm text-code-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> users.email
+                                    </span>
+<span class="px-2.5 py-1 bg-surface-container border border-outline-variant rounded text-on-surface font-code-sm text-code-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> users.password_hash
+                                    </span>
+<span class="px-2.5 py-1 bg-surface-container border border-outline-variant rounded text-on-surface font-code-sm text-code-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> payments.card_last4
+                                    </span>
+<button class="px-2.5 py-1 bg-transparent border border-dashed border-outline-variant rounded text-on-surface-variant hover:text-on-surface hover:border-on-surface font-code-sm text-code-sm transition-colors">
+                                        + Add Manual Rule
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (Insights & AI) -->
+<div class="space-y-6">
+<!-- Safety Score -->
+<div class="bg-gradient-to-b from-surface-container-low to-surface-dim border border-surface-container-highest rounded-xl p-6 relative overflow-hidden">
+<!-- Decorative glow -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-tertiary/20 rounded-full blur-[40px]"></div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-[16px] mb-4 relative z-10">Posture Overview</h3>
+<div class="flex items-end gap-3 mb-2 relative z-10">
+<span class="font-display-lg text-display-lg text-tertiary leading-none">92</span>
+<span class="font-label-md text-label-md text-on-surface-variant mb-2">/ 100</span>
+</div>
+<p class="font-body-md text-body-md text-tertiary-fixed-dim text-[14px] flex items-center gap-1.5 mb-6">
+<span class="material-symbols-outlined text-[16px]">verified</span> Production-Ready
+                            </p>
+<div class="space-y-3 relative z-10 border-t border-surface-container-highest pt-4">
+<p class="font-label-md text-label-md text-on-surface-variant text-[12px] uppercase tracking-wide">Recommendations</p>
+<div class="flex items-start gap-2 text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">info</span>
+<p class="font-body-md text-body-md text-[13px]">Enable Audit Trail history to track structural schema changes.</p>
+</div>
+<div class="flex items-start gap-2 text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">check</span>
+<p class="font-body-md text-body-md text-[13px] line-through decoration-outline-variant">Configure PII masking</p>
+</div>
+</div>
+</div>
+<!-- AI Safety Assistant -->
+<div class="bg-surface/50 backdrop-blur-xl border border-secondary/20 rounded-xl p-1 relative overflow-hidden">
+<!-- Shader Background Placeholder -->
+
+<div class="relative z-10 bg-surface-container-low/90 backdrop-blur-md rounded-lg p-5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary">smart_toy</span>
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">AI Safety Advisor</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-[13px] mb-4">Ask about optimal security configurations or analyzing recent query patterns.</p>
+<div class="space-y-2 mb-4">
+<button class="w-full text-left px-3 py-2 bg-surface-dim border border-outline-variant/50 rounded-md hover:border-secondary/50 hover:bg-surface-container transition-colors font-body-md text-body-md text-[12px] text-on-surface">
+                                        "Are my timeout limits standard for analytical workloads?"
+                                    </button>
+<button class="w-full text-left px-3 py-2 bg-surface-dim border border-outline-variant/50 rounded-md hover:border-secondary/50 hover:bg-surface-container transition-colors font-body-md text-body-md text-[12px] text-on-surface">
+                                        "Generate a policy for read-only analysts."
+                                    </button>
+</div>
+<div class="relative">
+<input class="w-full bg-background border border-outline-variant rounded-lg pl-3 pr-10 py-2.5 font-body-md text-body-md text-[13px] text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/50 placeholder:text-on-surface-variant/50" placeholder="Ask AI Advisor..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-secondary/10 hover:bg-secondary/20 rounded text-secondary transition-colors">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
