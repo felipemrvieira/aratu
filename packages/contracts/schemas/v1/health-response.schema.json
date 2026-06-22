@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aratu.dev/schemas/engine/v1/health-response.schema.json",
+  "title": "HealthResponse",
+  "description": "Authenticated health response used by Electron main to verify engine availability and compatibility.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "protocolVersion", "engineVersion", "uptimeMs"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["ready", "degraded", "draining"]
+    },
+    "protocolVersion": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
+    "engineVersion": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    },
+    "uptimeMs": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

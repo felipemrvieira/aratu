@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aratu.dev/schemas/engine/v1/ready-event.schema.json",
+  "title": "ReadyEvent",
+  "description": "Single readiness event emitted by the engine on stdout after authentication and local HTTP startup.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event", "host", "port", "protocolVersion", "engineVersion"],
+  "properties": {
+    "event": {
+      "const": "ready"
+    },
+    "host": {
+      "const": "127.0.0.1",
+      "description": "The engine is restricted to IPv4 loopback in the desktop distribution."
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "protocolVersion": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
+    "engineVersion": {
+      "type": "string",
+      "description": "Semantic version of the engine binary.",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+    }
+  }
+}

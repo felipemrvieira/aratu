@@ -331,3 +331,56 @@ Esta sessão focou exclusivamente em fundação, documentação e continuidade. 
 - Criar os primeiros JSON Schemas e escolher geração/validação para TypeScript e Go.
 - Inicializar o módulo Go e implementar o vertical slice de bootstrap, readiness e health.
 - Definir os métodos IPC/preload específicos antes de conectar o renderer.
+
+## Session 0007 — Initial Protocol Schemas
+
+**Date:** 2026-06-22  
+**Agent:** Codex  
+**Goal:** Materializar os primeiros payload contracts definidos pela ADR 0006.
+
+### Completed
+
+- [x] Criados schemas Draft 2020-12 para bootstrap input, ready event, health response, engine info e error envelope.
+- [x] Definidos `$id`, limites, campos obrigatórios e objetos fechados para cada payload.
+- [x] Restrito o token de bootstrap ao formato base64url sem padding de 32 bytes.
+- [x] Criados exemplos sintéticos correspondentes, sem secrets ou dados reais.
+- [x] Atualizados README de contracts, plano de execução e session handoff.
+- [x] Validados JSON, schemas e exemplos com as ferramentas disponíveis no ambiente.
+
+### Files created
+
+- `packages/contracts/schemas/v1/bootstrap-input.schema.json`
+- `packages/contracts/schemas/v1/ready-event.schema.json`
+- `packages/contracts/schemas/v1/health-response.schema.json`
+- `packages/contracts/schemas/v1/engine-info.schema.json`
+- `packages/contracts/schemas/v1/error-envelope.schema.json`
+- `packages/contracts/examples/v1/bootstrap-input.json`
+- `packages/contracts/examples/v1/ready-event.json`
+- `packages/contracts/examples/v1/health-response.json`
+- `packages/contracts/examples/v1/engine-info.json`
+- `packages/contracts/examples/v1/error-envelope.json`
+
+### Files changed
+
+- `packages/contracts/README.md`
+- `docs/execution-plan.md`
+- `docs/session-handoff.md`
+- `docs/execution-log.md`
+
+### Decisions made
+
+- Manter os cinco schemas iniciais autocontidos até a escolha da ferramenta de geração e resolução de references.
+- Usar exemplos exclusivamente sintéticos e validá-los contra os schemas correspondentes.
+- Não adicionar ainda dependências Node ou Go apenas para validação documental.
+
+### Commands and tools used
+
+- `jq` para parsing e normalização estrutural dos arquivos JSON.
+- `jsonschema` para validação Draft 2020-12 dos exemplos contra seus schemas.
+- `apply_patch` para criar schemas, exemplos e sincronizar documentação.
+
+### Pending
+
+- Escolher e fixar tooling reproduzível de geração/validação para Go e TypeScript.
+- Inicializar o módulo Go e consumir os schemas no primeiro vertical slice.
+- Adicionar schemas de connectors, capabilities, connections e cancellation quando seus endpoints forem implementados.

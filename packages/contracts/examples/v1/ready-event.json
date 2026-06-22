@@ -1,0 +1,7 @@
+{
+  "event": "ready",
+  "host": "127.0.0.1",
+  "port": 43127,
+  "protocolVersion": "1",
+  "engineVersion": "0.1.0"
+}

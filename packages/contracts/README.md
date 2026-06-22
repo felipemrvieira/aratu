@@ -22,10 +22,14 @@ Generated artifacts may move to language-native build directories when tooling i
 
 ## Initial Schemas
 
-- `BootstrapInput`
-- `ReadyEvent`
-- `HealthResponse`
-- `EngineInfo`
+- `BootstrapInput` — implemented in `schemas/v1/bootstrap-input.schema.json`.
+- `ReadyEvent` — implemented in `schemas/v1/ready-event.schema.json`.
+- `HealthResponse` — implemented in `schemas/v1/health-response.schema.json`.
+- `EngineInfo` — implemented in `schemas/v1/engine-info.schema.json`.
+- `ErrorEnvelope` — implemented in `schemas/v1/error-envelope.schema.json`.
+
+Planned for later vertical slices:
+
 - `ConnectorDescriptor`
 - `CapabilitySet`
 - `ConnectionProfile`
@@ -33,9 +37,8 @@ Generated artifacts may move to language-native build directories when tooling i
 - `ConnectionTestResult`
 - `OperationReference`
 - `CancelOperationResult`
-- `ErrorEnvelope`
 
-No schema has been implemented yet. Names remain subject to refinement when the first engine endpoint is built.
+Every implemented schema has a matching document under `examples/v1/`. Examples must remain synthetic, contain no real token or connection data, and validate against their corresponding schema.
 
 ## Contract Rules
 

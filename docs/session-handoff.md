@@ -2,7 +2,7 @@
 
 ## Current Project State
 
-Aratu has completed the repository foundation and documented its initial sidecar protocol. The target directory boundaries, product concept, architecture, roadmap, risk register, glossary, ADRs, brand direction, execution plan, execution history, and contract package guidance exist. The original Stitch references are preserved. There is no Node workspace, Electron runtime, React application, Go module, implemented JSON Schema, local database, or connector implementation yet.
+Aratu has completed the repository foundation, documented its initial sidecar protocol, and created the first JSON Schemas and synthetic examples for bootstrap, readiness, health, engine information, and errors. The original Stitch references are preserved. There is no Node workspace, Electron runtime, React application, Go module, local database, or connector implementation yet.
 
 ## Selected Direction
 
@@ -37,7 +37,7 @@ Also inspect the worktree before editing. Preserve existing and user-authored ch
 Implement one thin vertical protocol slice from the accepted ADR 0006:
 
 1. Initialize the Go module and `cmd/aratu-engine` entrypoint.
-2. Define the first JSON Schemas for bootstrap, readiness, health, engine information, and errors.
+2. Choose the minimal Go-side schema validation/generation approach and record its reproducible command.
 3. Implement bootstrap through `stdin`, ephemeral loopback binding, authenticated health, structured readiness, `stderr` logging, and graceful shutdown.
 4. Add tests for invalid bootstrap, wrong tokens, loopback binding, version mismatch, timeout, and shutdown.
 

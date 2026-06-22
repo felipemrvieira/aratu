@@ -33,6 +33,7 @@ This is the operational checklist for the project. A checked item means the repo
 - [ ] Criar entrypoint `cmd/aratu-engine`.
 - [ ] Criar healthcheck local.
 - [x] Definir protocolo local HTTP/JSON e lifecycle na ADR 0006.
+- [x] Criar JSON Schemas iniciais para bootstrap, readiness, health, engine info e errors.
 - [ ] Implementar API local HTTP/JSON autenticada.
 - [ ] Criar camada de services.
 - [ ] Criar interface de connectors.

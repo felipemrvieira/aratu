@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aratu.dev/schemas/engine/v1/bootstrap-input.schema.json",
+  "title": "BootstrapInput",
+  "description": "One-time bootstrap message written by Electron main to the engine stdin. The token is secret and must never be logged or persisted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "token"],
+  "properties": {
+    "type": {
+      "const": "bootstrap",
+      "description": "Discriminator for the stdin bootstrap message."
+    },
+    "token": {
+      "type": "string",
+      "description": "Unpadded base64url encoding of exactly 32 cryptographically secure random bytes.",
+      "pattern": "^[A-Za-z0-9_-]{43}$"
+    }
+  }
+}

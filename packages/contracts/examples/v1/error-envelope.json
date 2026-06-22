@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "CONNECTION_TIMEOUT",
+    "message": "The data source did not respond before the timeout.",
+    "retryable": true,
+    "requestId": "req_01JABCDEF1234567890",
+    "details": {}
+  }
+}
