@@ -18,6 +18,7 @@ ADRs preserve decisions that materially constrain implementation. They are histo
 | [0003](0003-connector-based-engine.md) | Accepted | Build the engine around connector capabilities |
 | [0004](0004-staged-changes-before-mutations.md) | Accepted | Stage and review changes before mutations |
 | [0005](0005-capability-based-data-source-connectors.md) | Proposed | Extend connectors to heterogeneous data sources through capabilities |
+| [0006](0006-electron-go-communication-protocol.md) | Accepted | Use authenticated HTTP/JSON and JSON Schema between Electron and Go |
 
 ## Creating an ADR
 

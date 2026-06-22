@@ -32,7 +32,8 @@ This is the operational checklist for the project. A checked item means the repo
 - [ ] Inicializar módulo Go.
 - [ ] Criar entrypoint `cmd/aratu-engine`.
 - [ ] Criar healthcheck local.
-- [ ] Criar API local HTTP ou gRPC.
+- [x] Definir protocolo local HTTP/JSON e lifecycle na ADR 0006.
+- [ ] Implementar API local HTTP/JSON autenticada.
 - [ ] Criar camada de services.
 - [ ] Criar interface de connectors.
 - [ ] Criar logs estruturados.
@@ -47,7 +48,7 @@ This is the operational checklist for the project. A checked item means the repo
 - [ ] Criar client interno para chamar engine.
 - [ ] Criar healthcheck da engine pela UI.
 - [ ] Exibir status da engine na interface.
-- [ ] Documentar lifecycle do sidecar.
+- [x] Documentar lifecycle do sidecar.
 
 **Exit criteria:** packaged and development builds authenticate to the sidecar, expose only typed preload operations, handle crash/restart states, and cancel outstanding work on shutdown.
 

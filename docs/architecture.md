@@ -38,7 +38,7 @@ Owns windows, application lifecycle, OS integrations, secure credential retrieva
 
 Runs as a child process managed by Electron. It owns connection sessions, connector capabilities, schema introspection, query classification, execution limits, cancellation, staged mutations, transaction boundaries, normalized errors, local metadata access, and structured diagnostics.
 
-Go is selected for a small distributable runtime, explicit concurrency and cancellation, mature database libraries, and strong isolation of database behavior from UI concerns. The sidecar must bind only to a local endpoint, authenticate its parent/client, emit readiness explicitly, and shut down when the desktop app exits. HTTP versus gRPC remains undecided and must be recorded before Phase 2 implementation.
+Go is selected for a small distributable runtime, explicit concurrency and cancellation, mature database libraries, and strong isolation of database behavior from UI concerns. Per ADR 0006, the sidecar binds HTTP/JSON only to `127.0.0.1` on an operating-system-assigned port, authenticates Electron main with a per-run token delivered through `stdin`, emits one readiness event through `stdout`, sends logs to `stderr`, and shuts down with the desktop app.
 
 ### Connectors
 
@@ -59,7 +59,9 @@ The conceptual request path is:
 5. A connector performs the database operation with timeout and cancellation.
 6. Results return as bounded, normalized DTOs; errors are structured and redact secrets.
 
-Large result sets must use server-side pagination or bounded streaming with backpressure. The renderer must never assume that an entire table can fit in memory. Contract compatibility, sidecar readiness, cancellation semantics, and streaming protocol require ADRs or contract documentation before implementation.
+Shared payloads are defined with JSON Schema Draft 2020-12 under `packages/contracts`. Electron main assigns request IDs, enforces client timeouts, and translates allowlisted renderer operations into authenticated engine requests. Long operations expose operation IDs for explicit cancellation backed by Go contexts.
+
+Initial result APIs use server-side bounded pagination and enforce payload limits. The renderer must never assume that an entire table can fit in memory. Streaming is deliberately deferred; it requires a later ADR covering backpressure, partial failure, cancellation, and memory limits.
 
 ## Architectural Boundaries
 
@@ -80,6 +82,7 @@ The application remains useful without an Aratu account or cloud service. Connec
 
 - Electron uses context isolation, sandboxing where compatible, disabled Node integration, a restrictive Content Security Policy, and validated IPC payloads.
 - The sidecar accepts only authenticated local calls and must not expose a LAN-accessible service.
+- The engine token is generated per run, delivered through child `stdin`, retained only by Electron main and the engine, and never exposed to renderer state or logs.
 - Secrets are referenced by opaque identifiers and retrieved from the OS keyring only in trusted layers.
 - Logs, errors, history, and telemetry redact credentials, bind values, and sensitive row data by default.
 - Connections carry an environment classification such as development, staging, or production.
@@ -87,7 +90,7 @@ The application remains useful without an Aratu account or cloud service. Connec
 - Production mutations require stronger policy and explicit confirmation; renderer warnings alone are not controls.
 - Dependencies, packaged binaries, and release artifacts require integrity and vulnerability checks.
 
-The threat model and concrete IPC/transport controls remain Phase 1-3 deliverables.
+The broader threat model and concrete renderer IPC schemas remain Phase 1-3 deliverables. Engine transport controls and lifecycle are defined in ADR 0006.
 
 ## Connector Strategy
 
@@ -113,14 +116,14 @@ Apply occurs in a transaction when supported. Before mutation, the engine revali
 
 ## Deployment and Lifecycle
 
-Electron packages the platform-specific Go binary as an application resource. Main selects the correct binary, starts it with a per-run authentication secret and constrained environment, waits for readiness, monitors exit, and performs graceful shutdown. CI must build, test, checksum, and package binaries for every supported OS/architecture combination.
+Electron packages the platform-specific Go binary as an application resource. Main selects the correct binary, starts it with a constrained environment and ephemeral port, sends the per-run authentication token through `stdin`, validates structured readiness and protocol compatibility, monitors exit, and performs authenticated graceful shutdown. CI must build, test, checksum, and package binaries for every supported OS/architecture combination.
 
 ## Future Decisions
 
 - Package manager, monorepo tooling, and supported Node/Go versions.
-- HTTP/JSON, Connect, or gRPC transport and contract generation.
-- Local endpoint and authentication mechanism per operating system.
-- Contract versioning and desktop/engine compatibility policy.
+- JSON Schema code-generation and runtime-validation tooling for TypeScript and Go.
+- Backward-compatibility window after more than one protocol version exists.
+- Whether measured workloads justify HTTP streaming or a different transport.
 - Schema cache invalidation and metadata migration strategy.
 - SQL parsing libraries and dialect-aware safety model.
 - Supported platforms and code-signing/notarization scope.

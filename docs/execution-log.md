@@ -277,3 +277,57 @@ Esta sessão focou exclusivamente em fundação, documentação e continuidade. 
 ### Pending
 
 - Inicializar o repositório Git local, criar o commit inicial e enviar a branch `main`.
+
+## Session 0006 — Electron ↔ Go Protocol Decision
+
+**Date:** 2026-06-22  
+**Agent:** Codex  
+**Goal:** Registrar o protocolo, autenticação, descoberta, contratos e lifecycle do Go sidecar.
+
+### Completed
+
+- [x] Aceito HTTP/JSON sobre IPv4 loopback como transporte local.
+- [x] Aceita porta efêmera com readiness estruturado via `stdout` e logs via `stderr`.
+- [x] Aceito token bearer de 256 bits por execução, entregue ao sidecar via `stdin`.
+- [x] Aceito JSON Schema Draft 2020-12 como fonte de verdade dos payloads.
+- [x] Documentados health/version handshake, error envelope, request IDs, timeouts, cancelamento e graceful shutdown.
+- [x] Definida paginação limitada para o protocolo inicial e adiado streaming até existir evidência de necessidade.
+- [x] Documentadas falhas de startup, crash, política de restart e proibição de replay automático de mutações.
+- [x] Criado guia inicial para `packages/contracts`.
+
+### Files created
+
+- `docs/adr/0006-electron-go-communication-protocol.md`
+- `packages/contracts/README.md`
+
+### Files changed
+
+- `docs/adr/README.md`
+- `docs/architecture.md`
+- `docs/execution-plan.md`
+- `docs/session-handoff.md`
+- `docs/risks.md`
+- `docs/execution-log.md`
+
+### Files removed
+
+- `packages/contracts/.gitkeep` — substituído pelo README real do package.
+
+### Decisions made
+
+- Electron main é o único cliente HTTP da engine; renderer não recebe porta ou token.
+- Toda rota, inclusive health e shutdown, exige autenticação.
+- JSON Schema define payloads; comportamento HTTP é documentado e testado separadamente.
+- OpenAPI não será mantido como segunda fonte de verdade nesta fase.
+- Streaming e compatibilidade entre múltiplas versões publicadas exigirão decisões posteriores.
+
+### Commands and tools used
+
+- `nl`, `sed`, `ls` e `git status` para revisar o estado documental e o package de contracts.
+- `apply_patch` para criar a ADR e sincronizar arquitetura, plano, riscos, handoff e log.
+
+### Pending
+
+- Criar os primeiros JSON Schemas e escolher geração/validação para TypeScript e Go.
+- Inicializar o módulo Go e implementar o vertical slice de bootstrap, readiness e health.
+- Definir os métodos IPC/preload específicos antes de conectar o renderer.

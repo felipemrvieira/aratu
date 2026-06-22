@@ -2,7 +2,7 @@
 
 ## Current Project State
 
-Aratu is at **Phase 0: repository foundation**. The target directory boundaries, product concept, architecture, roadmap, risk register, glossary, initial ADRs, brand direction, execution plan, and execution history exist. The original Stitch references are preserved. There is no Node workspace, Electron runtime, React application, Go module, transport contract, local database, or connector implementation yet.
+Aratu has completed the repository foundation and documented its initial sidecar protocol. The target directory boundaries, product concept, architecture, roadmap, risk register, glossary, ADRs, brand direction, execution plan, execution history, and contract package guidance exist. The original Stitch references are preserved. There is no Node workspace, Electron runtime, React application, Go module, implemented JSON Schema, local database, or connector implementation yet.
 
 ## Selected Direction
 
@@ -10,6 +10,8 @@ Aratu is at **Phase 0: repository foundation**. The target directory boundaries,
 - Electron main/preload/renderer split with React and TypeScript.
 - Go engine as a supervised local sidecar.
 - Typed, narrow renderer-to-main calls and authenticated local main-to-engine transport.
+- HTTP/JSON on ephemeral IPv4 loopback, per-run bearer token through `stdin`, readiness through `stdout`, and logs through `stderr`.
+- JSON Schema Draft 2020-12 as the source of truth for shared payloads; bounded pagination before streaming.
 - PostgreSQL first; SQLite second; MySQL later; Oracle experimental.
 - App-owned SQLite metadata store and OS keyring for secrets.
 - Staged review before mutations.
@@ -32,12 +34,14 @@ Also inspect the worktree before editing. Preserve existing and user-authored ch
 
 ## Next Recommended Task
 
-Define the Electron ↔ Go contract and lifecycle at documentation level before scaffolding both runtimes. Decide the transport, local endpoint, per-run authentication, health/version handshake, error envelope, cancellation, streaming/pagination boundary, and contract source of truth. Record the result in a new ADR and `packages/contracts/README.md` or an equivalent contract specification.
+Implement one thin vertical protocol slice from the accepted ADR 0006:
 
-After that decision, initialize one thin vertical foundation:
+1. Initialize the Go module and `cmd/aratu-engine` entrypoint.
+2. Define the first JSON Schemas for bootstrap, readiness, health, engine information, and errors.
+3. Implement bootstrap through `stdin`, ephemeral loopback binding, authenticated health, structured readiness, `stderr` logging, and graceful shutdown.
+4. Add tests for invalid bootstrap, wrong tokens, loopback binding, version mismatch, timeout, and shutdown.
 
-1. Electron + Vite + React + TypeScript shell with secure main/preload defaults; or
-2. Go module with entrypoint, readiness healthcheck, structured logging, and graceful shutdown.
+The Electron shell can then be initialized against this tested protocol surface.
 
 Do not attempt a database connector until sidecar lifecycle and contract boundaries are testable.
 

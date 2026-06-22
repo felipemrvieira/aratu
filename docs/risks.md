@@ -6,7 +6,7 @@ Risks are reviewed when their related phase starts and after material design cha
 
 **Description:** process startup, readiness, authentication, port or socket selection, version compatibility, crashes, and shutdown add distributed-system behavior inside a desktop app.  
 **Impact:** High. Failures can make the app unusable or expose a local service.  
-**Mitigation:** define the lifecycle and protocol before implementation; use per-run authentication, loopback/socket binding, readiness and version handshakes, bounded restart policy, graceful shutdown, and integration tests in development and packaged builds.
+**Mitigation:** implement ADR 0006: ephemeral IPv4 loopback HTTP, per-run token through `stdin`, authenticated health, structured readiness and version handshake, bounded restart policy, graceful shutdown, and integration tests in development and packaged builds.
 
 ## R-002 — Cross-Platform Packaging
 
@@ -79,6 +79,12 @@ Risks are reviewed when their related phase starts and after material design cha
 **Description:** forcing relational databases, Redis, Solr, and document stores into a single table/row/SQL model can hide native behavior, encourage expensive operations, and imply unsupported guarantees about transactions, pagination, identity, or rollback.  
 **Impact:** High. Incorrect abstractions can damage performance, weaken safety, and make source-specific features unusable.  
 **Mitigation:** use small lifecycle contracts plus composable capabilities; retain source-native workspaces and policies; validate the model with PostgreSQL and a non-relational connector before acceptance; keep federation and cross-source joins outside the connector scope.
+
+## R-014 — Local HTTP Sidecar Exposure
+
+**Description:** another local process may discover the ephemeral engine port, attempt unauthorized requests, exploit overly permissive CORS/host handling, or exhaust request resources.  
+**Impact:** High. A compromised local endpoint could expose metadata, execute database operations, or degrade the application.  
+**Mitigation:** bind only to `127.0.0.1`; require a per-run 256-bit bearer token on every route; deliver it through `stdin`; disable CORS; validate host, method, content type, schemas, and body limits; enforce deadlines and rate/resource bounds; never expose endpoint details or authorization material to the renderer or logs.
 
 ## Review Cadence
 
