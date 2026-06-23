@@ -32,7 +32,7 @@ The project also serves as a senior engineering portfolio: architectural decisio
 | App metadata | SQLite |
 | Connectors | PostgreSQL first; SQLite second; MySQL and Oracle later |
 
-The exact versions, build tooling, and sidecar protocol remain intentional Phase 1-3 decisions.
+Desktop versions and build tooling are locked through pnpm. The sidecar protocol is defined in ADR 0006; packaging and release tooling remain later decisions.
 
 ## AI-Guided Operations
 
@@ -50,7 +50,32 @@ AI output is a proposal, not authority. The Go engine remains responsible for ca
 
 ## Current Status
 
-**Repository foundation.** The initial structure, product and architecture documentation, ADRs, roadmap, risk register, execution plan, and session handoff are in place. No application runtime or connector has been implemented yet.
+**Desktop shell foundation.** The secure Electron main/preload/renderer boundary, React shell, Tailwind/shadcn setup, mock engine client, and initial protocol schemas are in place. The Go sidecar and database connectors have not been implemented yet.
+
+## Development
+
+Prerequisites: Node.js 22.12+ and pnpm 11.8+.
+
+```bash
+pnpm install
+pnpm dev
+```
+
+On Linux systems where AppArmor blocks unprivileged user namespaces, use the explicit development-only fallback:
+
+```bash
+pnpm dev:linux
+```
+
+This passes electron-vite's `--noSandbox` flag and must never be used for production or release validation. The application configuration keeps renderer sandboxing enabled.
+
+Quality checks:
+
+```bash
+pnpm typecheck
+pnpm test
+pnpm build
+```
 
 ## Architecture at a Glance
 
@@ -94,4 +119,4 @@ Start with [product concept](docs/product-concept.md), [architecture](docs/archi
 
 ## Project Stage
 
-Aratu is in an early design and repository-foundation phase. APIs, storage schemas, packaging choices, and user-facing behavior are not stable. Implementation should follow the documented phases and record material decisions as ADRs.
+Aratu is in an early technical-foundation phase. The desktop shell is runnable, but screens still use mock data and the Go engine, connectors, storage, packaging, and user-facing contracts are not stable. Implementation should follow the documented phases and record material decisions as ADRs.

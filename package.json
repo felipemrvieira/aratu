@@ -1,0 +1,17 @@
+{
+  "name": "Aratu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Navigate complex data ecosystems.",
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @aratu/desktop dev",
+    "dev:linux": "pnpm --filter @aratu/desktop dev:linux",
+    "build": "pnpm --filter @aratu/desktop build",
+    "typecheck": "pnpm --filter @aratu/desktop typecheck",
+    "test": "pnpm --filter @aratu/desktop test"
+  }
+}

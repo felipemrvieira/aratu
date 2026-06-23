@@ -2,12 +2,13 @@
 
 ## Current Project State
 
-Aratu has completed the repository foundation, documented its initial sidecar protocol, and created the first JSON Schemas and synthetic examples for bootstrap, readiness, health, engine information, and errors. The original Stitch references are preserved. There is no Node workspace, Electron runtime, React application, Go module, local database, or connector implementation yet.
+Aratu has a runnable Electron foundation with a faithful Stitch-derived Connect Database screen, a mock Database Overview, local two-screen navigation, and a typed mock engine path through preload and named IPC. The connection form supports engine/environment selection, URL/manual modes, local URL inference, safety toggles, synthetic navigation without persisting credentials, and an independent scroll container for smaller viewports. The sidecar protocol and first JSON Schemas are documented. There is no Go module, real sidecar, database test, local metadata database, persistent router, or connector implementation yet.
 
 ## Selected Direction
 
 - Monorepo with `apps/desktop`, `engine`, `packages`, `docs`, and `brand` boundaries.
 - Electron main/preload/renderer split with React and TypeScript.
+- pnpm workspace using Electron 42, electron-vite 5, Vite 7, React 19, Tailwind CSS 4, and TypeScript 6.
 - Go engine as a supervised local sidecar.
 - Typed, narrow renderer-to-main calls and authenticated local main-to-engine transport.
 - HTTP/JSON on ephemeral IPv4 loopback, per-run bearer token through `stdin`, readiness through `stdout`, and logs through `stderr`.
@@ -32,16 +33,18 @@ Read these files in order:
 
 Also inspect the worktree before editing. Preserve existing and user-authored changes; do not infer completion from folder names alone.
 
+Expected starting point after Session 0011: `main` pushed to `origin/main` with the Electron foundation committed. If the worktree is not clean, inspect the diff before continuing.
+
 ## Next Recommended Task
 
-Implement one thin vertical protocol slice from the accepted ADR 0006:
+Implement one thin Go protocol slice from ADR 0006:
 
 1. Initialize the Go module and `cmd/aratu-engine` entrypoint.
 2. Choose the minimal Go-side schema validation/generation approach and record its reproducible command.
 3. Implement bootstrap through `stdin`, ephemeral loopback binding, authenticated health, structured readiness, `stderr` logging, and graceful shutdown.
 4. Add tests for invalid bootstrap, wrong tokens, loopback binding, version mismatch, timeout, and shutdown.
 
-The Electron shell can then be initialized against this tested protocol surface.
+After health is integrated, define `ConnectionTestRequest` and `ConnectionTestResult`, route the Connect Database form through preload/main, and replace local inference status with a real engine-backed connection test. Do not persist credentials until the OS keyring boundary exists.
 
 Do not attempt a database connector until sidecar lifecycle and contract boundaries are testable.
 

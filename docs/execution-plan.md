@@ -15,15 +15,15 @@ This is the operational checklist for the project. A checked item means the repo
 
 ## Phase 1 — Desktop Shell Foundation
 
-- [ ] Inicializar Electron + Vite + React + TypeScript.
-- [ ] Configurar Tailwind CSS.
-- [ ] Configurar shadcn/ui.
-- [ ] Criar layout base.
-- [ ] Criar sidebar.
-- [ ] Criar topbar.
-- [ ] Criar roteamento interno ou layout de telas.
-- [ ] Criar tema dark mode.
-- [ ] Criar app shell visual inspirado nos arquivos em `docs/stitch`.
+- [x] Inicializar Electron + Vite + React + TypeScript.
+- [x] Configurar Tailwind CSS.
+- [x] Configurar shadcn/ui.
+- [x] Criar layout base.
+- [x] Criar sidebar.
+- [x] Criar topbar.
+- [x] Criar navegação interna inicial entre Connect Database e Overview.
+- [x] Criar tema dark mode.
+- [x] Criar app shell visual inspirado nos arquivos em `docs/stitch`.
 
 **Exit criteria:** a secure development shell starts reliably, renders the primary layout, and has documented build/test commands and Electron security settings.
 
@@ -45,8 +45,9 @@ This is the operational checklist for the project. A checked item means the repo
 ## Phase 3 — Electron ↔ Go Communication
 
 - [ ] Fazer Electron iniciar o sidecar Go.
-- [ ] Criar canal seguro entre UI e Electron main.
-- [ ] Criar client interno para chamar engine.
+- [x] Criar canal seguro entre UI e Electron main.
+- [x] Criar interface interna `EngineClient` e implementação mock.
+- [ ] Criar implementação HTTP autenticada de `EngineClient`.
 - [ ] Criar healthcheck da engine pela UI.
 - [ ] Exibir status da engine na interface.
 - [x] Documentar lifecycle do sidecar.
@@ -70,7 +71,7 @@ This is the operational checklist for the project. A checked item means the repo
 
 ## Phase 5 — UI Database Exploration
 
-- [ ] Criar tela Connect Database.
+- [x] Criar tela Connect Database.
 - [ ] Criar tela Database Overview.
 - [ ] Criar tela Schema Explorer.
 - [ ] Criar tela Table Data View.

@@ -384,3 +384,244 @@ Esta sessão focou exclusivamente em fundação, documentação e continuidade. 
 - Escolher e fixar tooling reproduzível de geração/validação para Go e TypeScript.
 - Inicializar o módulo Go e consumir os schemas no primeiro vertical slice.
 - Adicionar schemas de connectors, capabilities, connections e cancellation quando seus endpoints forem implementados.
+
+## Session 0008 — Electron Desktop Foundation
+
+**Date:** 2026-06-22  
+**Agent:** Codex  
+**Goal:** Inicializar o desktop Electron antes da Go engine, preservando as fronteiras definidas pela arquitetura.
+
+### Completed
+
+- [x] Criado workspace pnpm com comandos raiz para development, typecheck, tests e build.
+- [x] Inicializado Electron 42 + electron-vite 5 + Vite 7 + React 19 + TypeScript 6.
+- [x] Configurados Tailwind CSS 4 e convenções shadcn/ui com componente Button.
+- [x] Criados main, preload, renderer e tipos compartilhados.
+- [x] Aplicados context isolation, sandbox, Node integration desabilitada, CSP, permission denial e navigation/window guards.
+- [x] Criados IPC channels allowlisted sem bridge genérica e com validação do sender/frame principal.
+- [x] Criados `EngineClient` e `MockEngineClient`, sem expor endpoint ou token ao renderer.
+- [x] Criado shell dark-first com sidebar, topbar, overview, entities, safety posture e assistência contextual.
+- [x] Integrada a logo Aratu como asset do renderer.
+- [x] Adicionados dois testes unitários do mock engine client.
+- [x] Executados typecheck, testes, build e smoke test do Electron.
+
+### Files created
+
+- `package.json`
+- `pnpm-workspace.yaml`
+- `pnpm-lock.yaml`
+- `apps/desktop/package.json`
+- `apps/desktop/electron.vite.config.ts`
+- `apps/desktop/tsconfig.json`
+- `apps/desktop/tsconfig.node.json`
+- `apps/desktop/tsconfig.web.json`
+- `apps/desktop/components.json`
+- `apps/desktop/src/shared/desktop-api.ts`
+- `apps/desktop/src/main/index.ts`
+- `apps/desktop/src/main/engine/engine-client.ts`
+- `apps/desktop/src/main/engine/mock-engine-client.ts`
+- `apps/desktop/src/main/engine/mock-engine-client.test.ts`
+- `apps/desktop/src/preload/index.ts`
+- `apps/desktop/src/renderer/index.html`
+- `apps/desktop/src/renderer/src/env.d.ts`
+- `apps/desktop/src/renderer/src/main.tsx`
+- `apps/desktop/src/renderer/src/App.tsx`
+- `apps/desktop/src/renderer/src/styles.css`
+- `apps/desktop/src/renderer/src/lib/utils.ts`
+- `apps/desktop/src/renderer/src/components/ui/button.tsx`
+- `apps/desktop/src/renderer/src/assets/crab.png`
+
+### Files changed
+
+- `.gitignore`
+- `README.md`
+- `apps/desktop/README.md`
+- `docs/execution-plan.md`
+- `docs/session-handoff.md`
+- `docs/execution-log.md`
+
+### Files removed
+
+- `apps/desktop/src/main/.gitkeep`
+- `apps/desktop/src/preload/.gitkeep`
+- `apps/desktop/src/renderer/.gitkeep`
+
+### Decisions made
+
+- Usar pnpm workspace sem task runner adicional nesta fase.
+- Fixar Vite 7 porque electron-vite 5 não declara compatibilidade com Vite 8.
+- Manter o mock atrás da mesma interface que receberá o client HTTP real.
+- Usar semantic colors Aratu preservando cyan para IA e emerald para success.
+- Não adicionar router, TanStack Query, Zustand ou packaging antes de existir um fluxo que os justifique.
+
+### Verification
+
+- `pnpm typecheck` — passed.
+- `pnpm test` — 1 file, 2 tests passed.
+- `pnpm build` — main, preload e renderer built successfully.
+- Electron smoke test — app permaneceu ativo até o timeout, sem falhas de preload, renderer ou IPC.
+- O smoke test usou `--no-sandbox --disable-gpu` somente porque o container não possui helper SUID nem VA-API; o código mantém `sandbox: true`.
+- Captura visual automatizada não foi possível porque o ambiente não possui ferramenta de screenshot.
+
+### Pending
+
+- Implementar routing/layout de telas e fluxos reais de navegação.
+- Inicializar a Go engine e substituir o mock pelo HTTP `EngineClient` autenticado.
+- Adicionar TanStack Query e Zustand quando os primeiros fluxos de dados e estado forem implementados.
+- Configurar packaging, icons e testes end-to-end em fases posteriores.
+
+## Session 0009 — Linux Sandbox Development Fallback
+
+**Date:** 2026-06-22  
+**Agent:** Codex  
+**Goal:** Permitir desenvolvimento Electron em Linux com user namespaces bloqueados pelo AppArmor sem enfraquecer a configuração de produção.
+
+### Completed
+
+- [x] Confirmado que `chrome-sandbox` não é root-owned e possui modo `755` dentro de `node_modules`.
+- [x] Confirmado `kernel.unprivileged_userns_clone=1` e restrição AppArmor ativa.
+- [x] Confirmado que criação de user namespace falha no ambiente atual.
+- [x] Consultadas as orientações oficiais do Electron e do electron-vite.
+- [x] Adicionado comando explícito `pnpm dev:linux` usando `electron-vite dev --noSandbox`.
+- [x] Mantido `pnpm dev` com sandbox e preservado `sandbox: true` no BrowserWindow.
+- [x] Separado CSP de development para React Fast Refresh do CSP restritivo usado em builds empacotados.
+- [x] Documentado que o fallback é exclusivo para desenvolvimento local.
+
+### Files changed
+
+- `package.json`
+- `apps/desktop/package.json`
+- `README.md`
+- `apps/desktop/README.md`
+- `docs/execution-log.md`
+
+### Decisions made
+
+- Não alterar owner ou bit SUID de binários dentro de `node_modules`.
+- Não desabilitar sandbox programaticamente no main process.
+- Expor a exceção como comando Linux explícito para evitar uso acidental em release.
+
+### Commands and tools used
+
+- `stat`, `sysctl` e `unshare` para diagnosticar SUID sandbox, user namespaces e AppArmor.
+- Documentação oficial Electron e electron-vite para confirmar o uso limitado de `--no-sandbox`.
+- `apply_patch` para adicionar o comando e atualizar documentação.
+
+### Pending
+
+- Validar builds empacotados com sandbox ativo em ambientes Linux de release suportados.
+
+## Session 0010 — Connect Database Screen
+
+**Date:** 2026-06-22  
+**Agent:** Codex  
+**Goal:** Implementar a tela inicial de conexão com alta fidelidade ao material `datapilot_connect_your_database_2` do Stitch.
+
+### Context inspected
+
+- [x] Lido integralmente `docs/stitch/datapilot_connect_your_database_2/code.html`.
+- [x] Inspecionada em resolução original a screenshot `screen.png` correspondente.
+- [x] Comparados layout, espaçamento, cores, tipografia, controles e estados com o renderer existente.
+
+### Completed
+
+- [x] Criado onboarding sem sidebar com header fixo, step indicator, ajuda e demo.
+- [x] Criado grid 3×2 para PostgreSQL, MySQL, SQLite, MongoDB, SQL Server e Redis.
+- [x] Criados tabs Connection URL e Manual setup.
+- [x] Criados campos de nome, ambiente, URL/manual connection e SSL mode.
+- [x] Criados visibility control, safety switches e production safeguard alert.
+- [x] Criado painel AI Assistant com inferência local de engine a partir da URL.
+- [x] Criados estados idle, analyzed e invalid sem simular conexão real.
+- [x] Adicionada navegação local entre Connect Database e Overview mockado.
+- [x] Empacotadas localmente Geist, Inter e JetBrains Mono para fidelidade offline.
+- [x] Adicionados testes de inferência para seis tipos de connection URL e casos inválidos.
+- [x] Capturado e inspecionado o renderer real via Chrome DevTools Protocol.
+
+### Files created
+
+- `apps/desktop/src/renderer/src/screens/connect-database/ConnectDatabaseScreen.tsx`
+- `apps/desktop/src/renderer/src/screens/connect-database/connection-utils.ts`
+- `apps/desktop/src/renderer/src/screens/connect-database/connection-utils.test.ts`
+
+### Files changed
+
+- `apps/desktop/src/renderer/src/App.tsx`
+- `apps/desktop/src/renderer/src/styles.css`
+- `apps/desktop/package.json`
+- `apps/desktop/README.md`
+- `pnpm-lock.yaml`
+- `docs/execution-plan.md`
+- `docs/session-handoff.md`
+- `docs/execution-log.md`
+
+### Decisions made
+
+- Abrir o app na tela Connect Database e manter Overview como destino mockado.
+- Usar indigo Stitch para seleção/onboarding, cyan para IA e emerald para segurança, preservando teal como cor de marca.
+- Não afirmar criptografia ou conexão verificada antes da implementação real.
+- Não persistir connection URL ou credenciais no protótipo.
+- Fazer análise de URL inteiramente local e sem IPC nesta fase.
+- Empacotar somente os subsets Latin das fontes variáveis para limitar o bundle.
+
+### Verification
+
+- `pnpm typecheck` — passed.
+- `pnpm test` — 2 files, 9 tests passed.
+- `pnpm build` — main, preload e renderer built successfully.
+- Runtime development — Vite HMR, preload e renderer carregaram sem CSP violations ou exceptions.
+- Visual capture — renderer capturado em PNG e comparado com a screenshot Stitch original.
+
+### Pending
+
+- Definir schemas `ConnectionTestRequest` e `ConnectionTestResult`.
+- Implementar teste real através do Go engine, main e preload.
+- Persistir somente metadata não sensível após integração com OS keyring.
+- Substituir navegação local por routing persistente quando o terceiro fluxo de tela for implementado.
+
+## Session 0011 — Desktop Session Closure
+
+**Date:** 2026-06-23  
+**Agent:** Codex  
+**Goal:** Encerrar a sessão Electron documentando estado, validações, fallback Linux e correção de scroll.
+
+### Completed
+
+- [x] Corrigido o scroll da tela Connect Database sem liberar scroll global no `body`.
+- [x] Mantido `body { overflow: hidden; }` para evitar scroll duplo no shell.
+- [x] Definida `.connection-page` como área rolável com `height: 100vh` e `overflow-y: auto`.
+- [x] Mantido o Overview com scroll próprio no `<main>`.
+- [x] Documentados comandos de desenvolvimento, qualidade e fallback Linux no README principal e no README do desktop.
+- [x] Atualizado o handoff com o estado real da fundação Electron e a próxima tarefa recomendada.
+- [x] Atualizado o plano de execução com itens realmente concluídos nas fases 1, 2, 3 e 5.
+
+### Files changed
+
+- `README.md`
+- `apps/desktop/README.md`
+- `apps/desktop/src/renderer/src/styles.css`
+- `docs/execution-plan.md`
+- `docs/session-handoff.md`
+- `docs/execution-log.md`
+
+### Decisions made
+
+- A tela Connect Database deve rolar no container da própria tela, não no documento global.
+- O fallback `pnpm dev:linux` permanece restrito a desenvolvimento local em ambientes Linux com AppArmor/user namespaces bloqueando o sandbox do Electron.
+- O próximo passo técnico deve ser um slice mínimo da Go engine seguindo a ADR 0006, antes de adicionar conectores reais.
+
+### Verification
+
+- `pnpm typecheck` — passed.
+- `pnpm test` — 2 files, 9 tests passed.
+- `pnpm build` — main, preload e renderer built successfully.
+
+### Commands and tools used
+
+- `rg`, `sed`, `git diff` e `git status` para localizar a causa do bloqueio de scroll e revisar o escopo.
+- `apply_patch` para corrigir CSS e atualizar documentação.
+- `pnpm typecheck`, `pnpm test` e `pnpm build` para validação.
+
+### Pending
+
+- Inicializar a Go engine com bootstrap, readiness e health autenticado.
+- Substituir o mock engine client por um client HTTP real quando o sidecar existir.
